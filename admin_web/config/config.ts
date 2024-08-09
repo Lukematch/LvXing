@@ -1,5 +1,6 @@
 import { defineConfig } from "@umijs/max";
 import routes from './routes'
+import { resolve } from 'path'
 
 
 export default defineConfig({
@@ -9,7 +10,14 @@ export default defineConfig({
   routes,
   initialState: {},
   layout: {},
-  // proxy:
+  proxy: {
+    '/api':{
+      target:'http://localhost:3000/',  // 接口域名
+      changeOrigin:true,
+      secure:false,
+      rewrite: (path: string) => path.replace('/api', '')
+    }
+  },
   locale: {
     // default zh-CN
     default: 'zh-CN',

@@ -25,7 +25,7 @@ export class UserService {
       where: { username }
     })
     if(existUser) {
-      throw new ApiException('已经存在该用户！', ApiErrorCode.USER_ID_INVALID)
+      return {code: 401, message: '用户已存在！'}
     }
     try {
       const newUser = await this.userRepository.create(createUserDto)
@@ -46,7 +46,7 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { username }
     })
-    if(!user) throw new ApiException('用户不存在！',ApiErrorCode.USER_NOTEXIST)
+    if(!user) return null
     return user;
   }
 

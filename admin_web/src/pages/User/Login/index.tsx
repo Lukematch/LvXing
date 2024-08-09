@@ -1,8 +1,8 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 
 // less样式
 import styles from './index.module.less';
-import { Button, Card, Form, Image, Input, Row, Select } from 'antd';
+import { Button, Card, Form, Image, Input, message, Row, Select } from 'antd';
 import { KeyOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { ConfigProvider } from 'antd';
@@ -10,10 +10,24 @@ import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css'
 //@ts-ignore
 import { history } from 'umi'
+import { runes } from 'runes2';
+import {
+  getCaptcha,
+  Login
+} from './server';
 
+interface loginUser {
+  username: string,
+  password: string,
+  code: string,
+}
 
 const LoginPage: FC = () => {
-  const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
+  const [form] = Form.useForm();
+
+  const [captcha, setCaptcha] = useState<string>('')
+
+  const { getPrefixCls } = useContext<any>(ConfigProvider.ConfigContext);
   const rootPrefixCls = getPrefixCls();
   const linearGradientButton = css`
     &.${rootPrefixCls}-btn-primary:not([disabled]):not(.${rootPrefixCls}-btn-dangerous) {
@@ -36,8 +50,50 @@ const LoginPage: FC = () => {
     }
   `;
   const LoginHome = () => {
-    history.push("/home");
+    // history.push("/home");
+    form.validateFields().then((result: loginUser) => {
+      // console.log(result);
+      if(captcha?.toUpperCase() !== result?.code?.toUpperCase()) {
+        message.error('验证码错误')
+        return 0
+      }
+      Login(result).then(({data}: any) => {
+        console.log(data);
+        if (data.code === 200) {
+          localStorage.setItem('token', data.data)
+          let user = {username: result.username, password: result.password}
+          localStorage.setItem('user', user.toString())
+          setTimeout(() => {
+            localStorage.clear()
+          }, 1000 * 60 * 60)
+          history.push("/home");
+          message.success(data.message)
+        } else if (data.code === 401 || data.code === 404) {
+          if (data.message === "账号或者密码错误") {
+            message.error('账号或者密码错误')
+            form.resetFields()
+            getCaptchaData()
+          } else {
+            message.error(data.message)
+            form.resetFields()
+            getCaptchaData()
+          }
+        }
+      })
+    })
   }
+  const getCaptchaData = async () => {
+    let response: any = await getCaptcha()
+    let captcha: any = document.getElementById('captcha');
+    // const svgText = await response.text();
+      // 将SVG文本直接插入到容器中
+    captcha.innerHTML = response.data;
+    setCaptcha(response.text)
+  }
+  useEffect(() => {
+    getCaptchaData()
+  }, [])
+
   return (
     <ConfigProvider
     button={{
@@ -51,6 +107,7 @@ const LoginPage: FC = () => {
       className={styles.loginCard}>
         <h2>Admin-react</h2>
         <Form
+        form={form}
         className={styles.loginForm}
         // initialValues={{ remember: false,
         //   username: 'admin',
@@ -62,7 +119,7 @@ const LoginPage: FC = () => {
           <Form.Item
           name="username"
           rules={[
-            { required: true, message: '请输入用户名!' }
+            { required: true, message: '用户名不为空！' }
           ]}>
             <Input
             prefix={
@@ -75,9 +132,13 @@ const LoginPage: FC = () => {
           <Form.Item
           name="password"
           rules={[
-            { required: true, message: '请输入用户名!' }
+            { required: true, message: '密码不为空！' }
           ]}>
             <Input.Password
+            count={{
+              show: true,
+              strategy: (txt: any) => runes(txt).length,
+            }}
             prefix={
               <LockOutlined className={styles.prefixIcon}/>
             }
@@ -85,7 +146,10 @@ const LoginPage: FC = () => {
             className={styles.loginInput}
             />
           </Form.Item>
-          <Form.Item name="verifyCode">
+          <Form.Item name="code"
+          rules={[
+            { required: true, message: '验证码不为空！' }
+          ]}>
             <Row className={styles.row}>
               <Input
               prefix={
@@ -95,9 +159,11 @@ const LoginPage: FC = () => {
               placeholder="请输入验证码"
               className={styles.verifyCodeInput}
               />
-              <Image
+              <span
+              id="captcha"
               className={styles.verifyCodeImage}
-              />
+              onClick={getCaptchaData}
+              ></span>
             </Row>
           </Form.Item>
             <Button
