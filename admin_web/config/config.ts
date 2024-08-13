@@ -1,6 +1,6 @@
 import { defineConfig } from "@umijs/max";
+import defaultSettings from './defaultSettings';
 import routes from './routes'
-import { resolve } from 'path'
 
 
 export default defineConfig({
@@ -9,7 +9,11 @@ export default defineConfig({
   model: {},
   routes,
   initialState: {},
-  layout: {},
+  layout: {
+    locale: true,
+    // siderWidth: 240,
+    ...defaultSettings,
+  },
   proxy: {
     '/api':{
       target:'http://localhost:3000/',  // 接口域名
@@ -18,32 +22,31 @@ export default defineConfig({
       rewrite: (path: string) => path.replace('/api', '')
     }
   },
+  fastRefresh: true,
+  plugins: [
+    require.resolve('@alita/plugins/dist/keepalive'),
+    require.resolve('@alita/plugins/dist/tabs-layout'),
+  ],
+  keepalive: [/./],
+  tabsLayout: {
+    hasDropdown: true,
+    // hasCustomTabs: true,
+  },
   locale: {
-    // default zh-CN
     default: 'zh-CN',
     antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
   },
   antd: {
     configProvider: {},
-    // antd <App /> valid for version 5.1.0 or higher, default: undefined
     appConfig: {},
-    // less or css, default less
-    // style: 'less',
-    // shortcut of `configProvider.theme`
-    // use to configure theme token, antd v5 only
     theme: {
       token: {
         'colorPrimary': 'rgb(22, 200, 200)'
       }
     },
-    // Add StyleProvider for legacy browsers
-    // styleProvider: {
-    //   hashPriority: 'high',
-    //   legacyTransformer: true,
-    // },
   },
-  title: 'Admin-react',
-  favicons: ['/favicon.ico']
+
+  title: 'LvXing',
+  // favicons: ['/favicon.ico']
 })

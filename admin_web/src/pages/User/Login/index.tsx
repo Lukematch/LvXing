@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 
 // less样式
 import styles from './index.module.less';
-import { Button, Card, Form, Image, Input, message, Row, Select } from 'antd';
+import { Button, Card, Form, Image, Input, message, notification, Row, Select } from 'antd';
 import { KeyOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { ConfigProvider } from 'antd';
@@ -15,6 +15,8 @@ import {
   getCaptcha,
   Login
 } from './server';
+import CustomFooter from '@/components/Footer';
+import { Footer } from 'antd/es/layout/layout';
 
 interface loginUser {
   username: string,
@@ -55,18 +57,24 @@ const LoginPage: FC = () => {
       // console.log(result);
       if(captcha?.toUpperCase() !== result?.code?.toUpperCase()) {
         message.error('验证码错误')
+        getCaptchaData()
         return 0
       }
       Login(result).then(({data}: any) => {
-        console.log(data);
+        // console.log(data);
         if (data.code === 200) {
           localStorage.setItem('token', data.data)
-          let user = {username: result.username, password: result.password}
-          localStorage.setItem('user', user.toString())
+          let user = {username: result.username}
+          localStorage.setItem('user', JSON.stringify(user))
           setTimeout(() => {
+            notification.info({
+              message: 'token过期',
+              description: '请重新登录并验证:-)',
+              duration: 0
+            })
             localStorage.clear()
           }, 1000 * 60 * 60)
-          history.push("/home");
+          history.push("/instructionPanel");
           message.success(data.message)
         } else if (data.code === 401 || data.code === 404) {
           if (data.message === "账号或者密码错误") {
@@ -102,6 +110,7 @@ const LoginPage: FC = () => {
     >
     <div>
       <div className={styles.container}>
+      <Row>
       <Card
       bordered
       className={styles.loginCard}>
@@ -175,8 +184,11 @@ const LoginPage: FC = () => {
             </Button>
         </Form>
       </Card>
+      </Row>
       {/* 底部版权 */}
-      {/* <Footer /> */}
+      <Footer className={styles.footer}>
+        <CustomFooter />
+      </Footer>
       </div>
     </div>
   </ConfigProvider>

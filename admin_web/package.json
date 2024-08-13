@@ -12,6 +12,7 @@
     "test": "cross-env TS_NODE_TRANSPILE_ONLY=yes jest --passWithNoTests"
   },
   "dependencies": {
+    "@alita/plugins": "^3.5.3",
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
     "@emotion/css": "^11.13.0",
@@ -20,6 +21,7 @@
     "@umijs/max": "^4.3.8",
     "antd": "^5.4.0",
     "axios": "^1.7.3",
+    "react-draggable": "^4.4.6",
     "runes2": "^1.1.4",
     "umi-request": "^1.4.0"
   },

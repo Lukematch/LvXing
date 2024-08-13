@@ -1,10 +1,6 @@
-import React from 'react'
+import { instructionPanel, smartAdministration, personalCenter, technicalDocumentation, systemSettings } from './router'
 
 export default [
-  {
-    path: '/',
-    redirect: '/user/login'
-  },
   {
     path: '/user',
     layout: false,
@@ -16,20 +12,14 @@ export default [
       }
     ]
   },
+  instructionPanel,
+  smartAdministration,
+  personalCenter,
+  technicalDocumentation,
+  systemSettings,
   {
-    name: 'home',
-    path: '/home',
-    component: '../pages/Home'
-  },
-  {
-    name: 'table',
-    path: '/table',
-    component: '../pages/Table'
-  },
-  {
-    name: 'access',
-    path: '/access',
-    component: '../pages/Access'
+    path: '/',
+    redirect: '/user/login'
   },
   {
     path: '*',
@@ -37,3 +27,4 @@ export default [
     component: '../pages/User/404'
   },
 ]
+
