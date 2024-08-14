@@ -1,21 +1,17 @@
+![110b3adc405d89fd5f4c0c386585d5f9--1723280224](../asset/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png)
 <div align="center">
-<img alt="LvXing" src="https://pic.imge.cc/2024/08/14/66bc60aad3257.png" width="280px">
+<!-- <img alt="LvXing" src="/admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png" width="280px"> -->
 <br>
-<strong>
 <h2>🔆 Admin-React</h2>
-|
-<h2>🧳 LvXing</h2>
-</strong>
-<br>
-(Work in progress)
+<p font-size="24px">🧳 LvXing (Work in progress)</p>
 <br>
 An exercise project modified from <a href="https://github.com/baiwumm/Xmw-Admin">
 <img src="https://pic.imge.cc/2024/08/14/66bc639a80d81.ico" alt="Author" width="12px">
 Xmw Admin
 </a>
-<br>
-<br>
 </div>
+<br>
+<br>
 
 ## 🚩 项目简介
 -  前端： [React](https://react.dev/)、[Umi](https://umijs.org/)
@@ -24,7 +20,7 @@ Xmw Admin
 -  后端： [Nest.js](https://docs.nestjs.cn/)、[Mysql](https://www.mysql.com/)
 
 
-## 🚩 预览(Working in progress)
+## 🚩 预览
 <!-- -  [预览地址](https://lvxing.saicaca.com/) -->
 
 ## 🚩 运行
@@ -87,4 +83,4 @@ http://localhost:3000
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/admin-react&type=Date)](https://star-history.com/#Lukematch/admin-react&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/admin-react&type=Timeline)](https://star-history.com/#Lukematch/admin-react&Timeline)
