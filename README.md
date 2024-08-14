@@ -1,4 +1,4 @@
-![110b3adc405d89fd5f4c0c386585d5f9--1723280224](../asset/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png)
+![110b3adc405d89fd5f4c0c386585d5f9--1723280224](./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png)
 <div align="center">
 <!-- <img alt="LvXing" src="/admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png" width="280px"> -->
 <br>
