@@ -1,6 +1,7 @@
 export default {
   path: '/smartAdministration',
   name: '智能管理',
+  icon: 'areaChart',
   // access: 'adminRouteFilter',
   exact: true,
   routes: [
@@ -12,6 +13,7 @@ export default {
       {
           path: '/smartAdministration/announcement',
           name: '公告管理',
+          icon: 'notification',
           component: './SmartAdministration/announcement',
           // access: 'adminRouteFilter',
           exact: true,
@@ -19,6 +21,7 @@ export default {
       {
           path: '/smartAdministration/organization',
           name: '组织管理',
+          icon: 'team',
           component: './SmartAdministration/organization',
           // access: 'adminRouteFilter',
           exact: true,
@@ -26,6 +29,7 @@ export default {
       {
         path: '/smartAdministration/position',
         name: '岗位管理',
+        icon: 'truck',
         component: './SmartAdministration/position',
         // access: 'adminRouteFilter',
         exact: true,
@@ -33,6 +37,7 @@ export default {
     {
       path: '/smartAdministration/organizationalStructure',
       name: '组织架构',
+      icon: 'project',
       component: './SmartAdministration/organizationalStructure',
       // access: 'adminRouteFilter',
       exact: true,

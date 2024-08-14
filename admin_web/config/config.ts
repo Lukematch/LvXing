@@ -4,15 +4,27 @@ import routes from './routes'
 
 
 export default defineConfig({
+  plugins: [
+    require.resolve('@alita/plugins/dist/keepalive'),
+    require.resolve('@alita/plugins/dist/tabs-layout'),
+  ],
   hash: true,
   access: {},
   model: {},
   routes,
   initialState: {},
+  keepalive: [/./],
+  tabsLayout: {
+    // 是否使用自定义的 tabs 组件，需要搭配运行时配置 getCustomTabs 使用
+    hasCustomTabs: false,
+    // 是否开启右侧的 tabs 管理器，可以实现“关闭左侧”，“关闭右侧”，“关闭其他”和“刷新”等功能。
+    hasDropdown: false,
+  },
   layout: {
-    locale: true,
+    locale: false,
     // siderWidth: 240,
     ...defaultSettings,
+    contentStyle: { padding: 0 },
   },
   proxy: {
     '/api':{
@@ -23,15 +35,6 @@ export default defineConfig({
     }
   },
   fastRefresh: true,
-  plugins: [
-    require.resolve('@alita/plugins/dist/keepalive'),
-    require.resolve('@alita/plugins/dist/tabs-layout'),
-  ],
-  keepalive: [/./],
-  tabsLayout: {
-    hasDropdown: true,
-    // hasCustomTabs: true,
-  },
   locale: {
     default: 'zh-CN',
     antd: true,

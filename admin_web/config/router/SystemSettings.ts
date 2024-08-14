@@ -1,6 +1,7 @@
 export default {
   path: '/systemSettings',
   name: '系统设置',
+  icon: 'setting',
   // access: 'adminRouteFilter',
   exact: true,
   routes: [
@@ -12,6 +13,7 @@ export default {
       {
           path: '/systemSettings/user',
           name: '用户管理',
+          icon: 'usergroupAdd',
           component: './SystemSettings/user',
           // access: 'adminRouteFilter',
           exact: true,
@@ -20,6 +22,7 @@ export default {
           path: '/systemSettings/menu',
           name: '菜单管理',
           component: './SystemSettings/menu',
+          icon: 'menu',
           // access: 'adminRouteFilter',
           exact: true,
       },
@@ -27,6 +30,7 @@ export default {
         path: '/systemSettings/role',
         name: '角色管理',
         component: './SystemSettings/role',
+        icon: 'control',
         // access: 'adminRouteFilter',
         exact: true,
     },
@@ -34,6 +38,7 @@ export default {
       path: '/systemSettings/operationLog',
       name: '操作日志',
       component: './SystemSettings/operationLog',
+      icon: 'edit',
       // access: 'adminRouteFilter',
       exact: true,
     },
