@@ -1,16 +1,15 @@
-![110b3adc405d89fd5f4c0c386585d5f9--1723280224](./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png)
+<!-- ![110b3adc405d89fd5f4c0c386585d5f9--1723280224](./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png) -->
+<p align = "center">
+<img src="./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png"  height="240" />
+</p>
 <div align="center">
-<!-- <img alt="LvXing" src="/admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png" width="280px"> -->
-<br>
 <h2>🔆 Admin-React</h2>
 <p font-size="24px">🧳 LvXing (Work in progress)</p>
-<br>
 An exercise project modified from <a href="https://github.com/baiwumm/Xmw-Admin">
 <img src="https://pic.imge.cc/2024/08/14/66bc639a80d81.ico" alt="Author" width="12px">
 Xmw Admin
 </a>
 </div>
-<br>
 <br>
 
 ## 🚩 项目简介
