@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGenerat
 @Entity()
 export class Role {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number
 
   @Column()
   name: string;

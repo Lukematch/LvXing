@@ -1,11 +1,12 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import encry from '../../utils/crypto';
 import * as crypto from 'crypto';
+import { Role } from "src/role/entities/role.entity";
 
 @Entity()
 export class User {
-  @PrimaryColumn()
-  id: string
+  @PrimaryGeneratedColumn()
+  id: number
 
   @Column({nullable: true})
   username: string
@@ -28,13 +29,20 @@ export class User {
   @Column({nullable: true})
   salt: string
 
-  @CreateDateColumn(
-    // { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
+  // 关联Role表 多对多
+  @ManyToMany(() => Role)
+  @JoinTable({
+    name: 'user_role_relation'
+  })
+  role: Role[]
+
+  @Column(
+    { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
     )
   createTime: Date
 
-  @UpdateDateColumn(
-    // { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
+  @Column(
+    { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
     )
   updateTime: Date
 

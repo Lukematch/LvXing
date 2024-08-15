@@ -3,15 +3,17 @@ import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 
-@Controller('role')
+@Controller('/api/role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
+  // 新增角色
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.roleService.create(createRoleDto);
   }
 
+  // 获取所以角色
   @Get()
   findAll() {
     return this.roleService.findAll();

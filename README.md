@@ -1,6 +1,6 @@
 <!-- ![110b3adc405d89fd5f4c0c386585d5f9--1723280224](./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png) -->
 <p align = "center">
-<img src="./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png"  height="240" />
+<img src="./admin_web/public/110b3adc405d89fd5f4c0c386585d5f9--1723280224.png"  height="280" />
 </p>
 <div align="center">
 <h2>🔆 Admin-React</h2>
@@ -82,4 +82,4 @@ http://localhost:3000
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/admin-react&type=Timeline)](https://star-history.com/#Lukematch/admin-react&Timeline)
+[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/LvXing&type=Timeline)](https://star-history.com/#Lukematch/LvXing&Timeline)

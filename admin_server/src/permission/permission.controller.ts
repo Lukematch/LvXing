@@ -3,10 +3,11 @@ import { PermissionService } from './permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 
-@Controller('permission')
+@Controller('/api/permission')
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
+  // 新增权限
   @Post()
   create(@Body() createPermissionDto: CreatePermissionDto) {
     return this.permissionService.create(createPermissionDto);

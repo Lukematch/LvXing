@@ -1,15 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Permission } from './entities/permission.entity';
 
 @Injectable()
 export class PermissionService {
-  create(createPermissionDto: CreatePermissionDto) {
-    return 'This action adds a new permission';
+  constructor(
+    @InjectRepository(Permission)
+    private readonly permissionRepository: Repository<Permission>,
+  ) {}
+
+  async create(createPermissionDto: CreatePermissionDto) {
+    const name = createPermissionDto.name;
+    const existPermission = await this.permissionRepository.findOne({
+      where: { name },
+    });
+
+    if (existPermission)
+      return { code:400, message: '权限已经存在！' };
+    return await this.permissionRepository.save(createPermissionDto);
   }
 
+
   findAll() {
-    return `This action returns all permission`;
+    return this.permissionRepository.find();
   }
 
   findOne(id: number) {

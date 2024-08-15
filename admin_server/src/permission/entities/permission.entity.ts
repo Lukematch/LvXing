@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 @Entity()
 export class Permission {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column()
     name: string;
@@ -11,9 +11,14 @@ export class Permission {
     @Column()
     description: string;
 
-    @CreateDateColumn()
-    createTime: Date;
+    @Column(
+      { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
+      )
+    createTime: Date
 
-    @UpdateDateColumn()
-    updateTime: Date;
+    @Column(
+      { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
+      )
+    updateTime: Date
+
 }
