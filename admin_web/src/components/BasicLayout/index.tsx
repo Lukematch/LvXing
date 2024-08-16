@@ -12,7 +12,6 @@ export const BasicLayout: RunTimeLayoutConfig = ({
   initialState,
   setInitialState,
 }: InitDataType) => {
-
   return {
     title: 'LvXing',
     logo: '/favicon.ico',
@@ -31,7 +30,6 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     //   if (!ACCESS_TOKEN && !eq(pathname, ROUTES.LOGIN)) {
     //     history.push(ROUTES.LOGIN);
     //   }
-    //   // 中文状态下，绑定 umami 事件
     //   if (eq(getLocale(), 'zh-CN') && !eq(pathname, '/')) {
     //     umami.track(formatMessage({ id: formatPerfix(pathname, '', true) }));
     //   }
@@ -56,7 +54,6 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     // },
     // 自定义拥有子菜单菜单项的 render 方法
     // subMenuItemRender: ({ icon, path = '' }) => {
-      
     // },
     // 菜单的折叠收起事件
     // onCollapse: (collapsed) => {

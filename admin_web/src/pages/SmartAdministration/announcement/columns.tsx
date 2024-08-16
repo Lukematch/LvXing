@@ -32,35 +32,42 @@ export const mockData: DataSourceType[] = [
 
 export const setColumns: ProColumns<DataSourceType>[] = [
   {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-    valueType: 'text',
-    hideInTable: true,
-  },
-  {
     title: '编号',
     dataIndex: 'index',
     key: 'index',
     valueType: 'text',
-    formItemProps: (form, { rowIndex }) => {
-      return {
-        rules:
-          rowIndex > 2 ? [{ required: true, message: '此项为必填项' }] : [],
-      };
-    },
+    readonly: true,
+    width: 50,
+    fixed: 'left',
+  },
+  {
+    title: '代号',
+    dataIndex: 'id',
+    key: 'id',
+    valueType: 'text',
+    width: 100,
+    fixed: 'left',
   },
   {
     title: '标题',
     dataIndex: 'title',
     key: 'title',
     valueType: 'text',
+    width: 100,
+    fixed: 'left',
   },
   {
     title: '话题',
     dataIndex: 'topic',
     key: 'topic',
     valueType: 'select',
+    width: 100,
+    formItemProps: (form, { rowIndex }) => {
+      return {
+        rules:
+          rowIndex > 2 ? [{ required: true, message: '此项为必填项' }] : [],
+      };
+    },
     // 重大事项：节假日、公司内部事项、会议记录，财务报告：某类型岗位薪资变更，风险提示：系统遭到xxx攻击，信息变更：部门、员工的调整
   },
   {
@@ -86,6 +93,7 @@ export const setColumns: ProColumns<DataSourceType>[] = [
     dataIndex: 'state',
     key: 'state',
     valueType: 'text',
+    width: 100,
     valueEnum: {
       closed: {
         text: '待发送',

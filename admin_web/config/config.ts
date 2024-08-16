@@ -21,7 +21,7 @@ export default defineConfig({
     hasDropdown: false,
   },
   layout: {
-    locale: false,
+    // locale: 'zh-CN',
     // siderWidth: 240,
     ...defaultSettings,
     contentStyle: { padding: 0 },
@@ -38,7 +38,8 @@ export default defineConfig({
   locale: {
     default: 'zh-CN',
     antd: true,
-    baseNavigator: true,
+    // baseNavigator: true,
+    // baseSeparator: '-', // 设置语言环境分隔符
   },
   antd: {
     configProvider: {},

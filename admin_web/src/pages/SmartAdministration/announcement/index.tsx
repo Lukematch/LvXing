@@ -1,7 +1,10 @@
-import { ActionType, EditableFormInstance, EditableProTable, ProCard, ProFormField, ProFormInstance } from '@ant-design/pro-components';
-import React, { useRef, useState } from 'react'
+import { ActionType, EditableFormInstance, EditableProTable, ProCard, ProColumns, ProFormField, ProFormInstance } from '@ant-design/pro-components';
+import React, { useEffect, useRef, useState } from 'react'
 import { mockData, setColumns } from './columns';
-import { Button, Form } from 'antd';
+import { Button, Form, Popconfirm } from 'antd';
+import { useModel } from '@umijs/max';
+
+// import { reduce, toNumber } from 'lodash-es';
 
 // 加载时间等待
 const waitTime = (time: number = 100) => {
@@ -12,8 +15,8 @@ const waitTime = (time: number = 100) => {
   });
 };
 export type DataSourceType = {
-  id?: number;
-  index: number;
+  id: React.Key;
+  index?: number;
   title?: string;
   topic?: string;
   content?: string;
@@ -24,40 +27,53 @@ export type DataSourceType = {
   update_time?: number;
 }
 
+// const columnScrollX = (columns: ProColumns[]): number =>
+//   reduce(columns, (sum: number, record: ProColumns) => sum + (Number(record.width) || 100), 0);
+
+
 export default () => {
+  const { initialState, setInitialState } = useModel('@@initialState');
   const formRef = useRef<EditableFormInstance>();
   const actionRef = useRef<ActionType>();
-
-  const columns = setColumns.concat( {
-    title: '操作',
-    valueType: 'option',
-    render: (_, row) => [
-      <a key="delete" onClick={() => {
-          const tableDataSource = formRef.current?.getFieldValue('table') as DataSourceType[];
-          formRef.current?.setFieldsValue({
-            table: tableDataSource?.filter((item) => item.index !== row?.index),
-          });
-        }}
-      >移除</a>,
-      <a key="edit" onClick={() => {
-          actionRef.current?.startEditable(row?.index);
-        }}
-      >编辑</a>,
-    ]
-  },)
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [defaultData, setDefaultData] = useState<readonly DataSourceType[]>(mockData);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
+  useEffect(() => {
+    // setInitialState({collapsed: true });
+  },[])
+
+  const columns = setColumns.concat( {
+    title: '操作',
+    valueType: 'option',
+    render: (text, record, _, action) => [
+      <Popconfirm
+      title='是否确认删除'
+      onConfirm={() => {
+        setDefaultData(defaultData.filter((item) => item.id !== record.id));
+      }}
+      >
+        <a key="delete">删除</a>
+      </Popconfirm>
+      ,
+      <a key="edit" onClick={() => {
+          if(record.id) actionRef.current?.startEditable(record.id);
+        }}
+      >编辑</a>,
+    ]
+  },)
+
   return <>
     <EditableProTable
-      rowKey="index"
+      rowKey="id"
       headerTitle={<h3>公告管理</h3>}
-      maxLength={5}
+      // maxLength={5}
       columns={columns}
-      scroll={{ x: 800 }}
+      scroll={{  x: 'max-content'
+        // columnScrollX(columns)
+      }}
       controlled={true}
       editableFormRef={formRef}
       actionRef={actionRef}
@@ -79,7 +95,8 @@ export default () => {
         position: 'bottom',
         creatorButtonText: '新增一行',
         record: () => ({
-          index: defaultData?.length + 1,
+          id: Math.floor(Math.random() * 10000) + 62400000,
+          index: defaultData?.length +1
         }),
       }}
 
@@ -89,8 +106,11 @@ export default () => {
         onSave: async (rowKey, data, row) => {
           console.log(rowKey, data, row);
           await waitTime(2000);
+          setDefaultData((prevData) =>
+          prevData.map((item) => (item.index === rowKey ? { ...item, ...data } : item))
+        );
         },
-        onChange: setEditableRowKeys,
+        onChange: (keys) => setEditableRowKeys(keys),
       }}
 
     />

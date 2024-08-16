@@ -9,7 +9,7 @@ import { ConfigProvider } from 'antd';
 //@ts-ignore
 import { css } from '@emotion/css'
 //@ts-ignore
-import { history } from 'umi'
+import { history, useModel } from '@umijs/max';
 import { runes } from 'runes2';
 import {
   getCaptcha,
@@ -17,6 +17,7 @@ import {
 } from './server';
 import CustomFooter from '@/components/Footer';
 import { Footer } from 'antd/es/layout/layout';
+import { getUser } from '@/utils/server';
 
 interface loginUser {
   username: string,
@@ -28,6 +29,7 @@ const LoginPage: FC = () => {
   const [form] = Form.useForm();
 
   const [captcha, setCaptcha] = useState<string>('')
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   const { getPrefixCls } = useContext<any>(ConfigProvider.ConfigContext);
   const rootPrefixCls = getPrefixCls();
@@ -64,8 +66,15 @@ const LoginPage: FC = () => {
         // console.log(data);
         if (data.code === 200) {
           localStorage.setItem('token', data.data)
-          let user = {username: result.username}
-          localStorage.setItem('user', JSON.stringify(user))
+          getUser(result.username).then(res => {
+            localStorage.setItem('user', JSON.stringify(res.data))
+            let name = res.data?.nickName
+            let avatar = res.data?.avatar
+            setInitialState({
+              name,
+              avatar
+            })
+          })
           setTimeout(() => {
             notification.info({
               message: 'token过期',
@@ -73,7 +82,9 @@ const LoginPage: FC = () => {
               duration: 0
             })
             localStorage.clear()
+            history.push("/user/login");
           }, 1000 * 60 * 60)
+
           history.push("/instructionPanel");
           message.success(data.message)
         } else if (data.code === 401 || data.code === 404) {

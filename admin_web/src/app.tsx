@@ -1,12 +1,12 @@
 // 运行时配置
 import { history, RunTimeLayoutConfig, useKeepOutlets,  } from 'umi';
 import { BasicLayout } from '@/components/BasicLayout';
+import { getUser } from './utils/server';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
-export async function getInitialState(): Promise<{ name: string, avatar: string } | undefined> {
-  let name = JSON.parse(localStorage.getItem('user')!)?.username
-  
-  let avatar = "https://pic.imge.cc/2024/08/13/66bb0e4443c63.jpg"
+export async function getInitialState(): Promise<{ name?: string, avatar?: string } | undefined> {
+  let name = JSON.parse(localStorage.getItem('user')!)?.nickName
+  let avatar = JSON.parse(localStorage.getItem('user')!)?.avatar
   return {
     name,
     avatar
