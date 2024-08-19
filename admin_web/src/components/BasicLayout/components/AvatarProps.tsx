@@ -6,7 +6,7 @@ import {
   UserOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
-
+// import { useKeepOutlets } from '@umijs/max';
 
 
 export default function AvatarProps(): HeaderProps['avatarProps'] {
@@ -15,6 +15,7 @@ export default function AvatarProps(): HeaderProps['avatarProps'] {
 
   const logOutClick = () => {
     try{
+      refresh()
       localStorage.clear()
       history.push('/user/login')
       message.success('退出登录成功')

@@ -9,11 +9,12 @@ export default function actionsRender(props: HeaderProps) {
   // 判断是否侧边布局
   const isSide = props.layout === 'side'
   if (props.isMobile || typeof window === 'undefined') return [
-      <Input
-      // prefix={<SearchOutlined />}
-      placeholder="Search"
-      // onSearch={handleSearch}
-    />
+    // 全局搜索
+    <GlobalSearch key="GlobalSearchMobile" />,
+    // 公告
+    <NoticeBell key="NoticeBellMobile" />,
+    // 全屏
+    <FullScreen key="FullScreenMobile" />,
   ];
   return [
     // 全局搜索

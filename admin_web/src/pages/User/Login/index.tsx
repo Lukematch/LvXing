@@ -85,7 +85,7 @@ const LoginPage: FC = () => {
             history.push("/user/login");
           }, 1000 * 60 * 60)
 
-          history.push("/instructionPanel");
+          history.push("/instructionPanel/workbench");
           message.success(data.message)
         } else if (data.code === 401 || data.code === 404) {
           if (data.message === "账号或者密码错误") {

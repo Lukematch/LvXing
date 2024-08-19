@@ -2,6 +2,8 @@
 import { history, RunTimeLayoutConfig, useKeepOutlets,  } from 'umi';
 import { BasicLayout } from '@/components/BasicLayout';
 import { getUser } from './utils/server';
+import { Tabs } from 'antd';
+import TabPane from 'antd/es/tabs/TabPane';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 export async function getInitialState(): Promise<{ name?: string, avatar?: string } | undefined> {
@@ -30,4 +32,4 @@ export async function tabsLayout({ initialState }: any): Promise<any> {
   }
 }
 // getCustomTabs
-// export const getCustomTabs = (config: any) => <Tabs {...config} />
+// export const getCustomTabs = () => <Tabs/>

@@ -39,7 +39,6 @@ export default defineConfig({
     default: 'zh-CN',
     antd: true,
     // baseNavigator: true,
-    // baseSeparator: '-', // 设置语言环境分隔符
   },
   antd: {
     configProvider: {},
