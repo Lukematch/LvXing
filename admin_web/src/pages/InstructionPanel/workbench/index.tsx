@@ -83,9 +83,7 @@ export default () =>{
           <Card title='矩形树图'></Card>
         </Col>
         <Col md={8} xs={24}>
-          <Card title='技术栈'>
-            
-          </Card>
+          <Card title='技术栈'></Card>
         </Col>
       </Row>
     </Content>
