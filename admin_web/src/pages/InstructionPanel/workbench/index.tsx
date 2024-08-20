@@ -9,6 +9,7 @@ import styles from './index.module.less'
 import { useLocation } from 'umi'
 import { history, useModel } from '@umijs/max';
 import ClockCard from '@/components/ClockCard'
+import CustomCharts from './components/customCharts'
 
 export default () =>{
   const location = useLocation();
@@ -20,17 +21,18 @@ export default () =>{
       </div>
       <Card className={styles.topCard}>
         <Row>
-          <Col xl={5} lg={10} md={10} xs={24}>
-            <Row>
-            <Col xl={24} lg={24} md={24} xs={12}>
+          <Col xl={6} lg={10} md={10} xs={24}>
+            <Row style={{position: 'relative'}}>
+            <Col style={{textAlign: 'center'}} xl={24} lg={24} md={24} xs={8}>
             <Avatar
             style={{marginBottom: 10}}
             shape="square" size={150}
             src={initialState?.avatar}
             />
             </Col>
-            <Col xl={24} lg={24} md={24} xs={12} style={{ fontSize: 20, fontWeight: 100,alignItems: 'center', display: 'flex'}}>
-              欢迎用户&nbsp;
+            <Col xl={24} lg={24} md={24} xs={16} style={{ fontSize: 20, fontWeight: 100,alignItems: 'center', display: 'flex', justifyContent: 'center'}}>
+              欢迎
+              {initialState?.name === 'admin'? '管理员' : '用户'}&nbsp;
               <span style={{fontWeight: 400}}>{initialState?.name}</span>
               &nbsp;访问
             </Col>
@@ -47,43 +49,51 @@ export default () =>{
     <Content className={styles.content}>
       <Row>
         <Col xl={6} lg={12} md={12} xs={24}>
-          <Card title='饼图'></Card>
+          <Card className={styles.card}>
+            <CustomCharts type='pie' width={'auto'} height={300} />
+          </Card>
         </Col>
         <Col xl={6} lg={12} md={12} xs={24}>
-          <Card title='折线图'></Card>
+          <Card className={styles.card}>
+            <CustomCharts type='line' width={'auto'} height={300} />
+          </Card>
         </Col>
         <Col xl={6} lg={12} md={12} xs={24}>
-          <Card title='柱状图'></Card>
+          <Card className={styles.card}>
+            <CustomCharts type='bar' width={'auto'} height={300} />
+          </Card>
         </Col>
         <Col xl={6} lg={12} md={12} xs={24}>
-          <Card title='散点图'></Card>
+          <Card className={styles.card}>
+            <CustomCharts type='scatter' width={'auto'} height={300} />
+          </Card>
         </Col>
       </Row>
       <Row>
         <Col lg={8} md={12} xs={24}>
-          <Card title='树图'></Card>
+          <Card className={styles.card} title='树图'></Card>
         </Col>
         <Col lg={8} md={12} xs={24}>
-          <Card title='OHLC图'></Card>
+          <Card className={styles.card} title='OHLC图'></Card>
         </Col>
         <Col lg={8} md={24} xs={24}>
-          <Card title='地图柱状图变形动画'></Card>
+          <Card className={styles.card} title='地图柱状图变形动画'></Card>
         </Col>
       </Row>
       <Row>
         <Col md={12} xs={24}>
-          <Card title='雷达图'></Card>
+          <Card className={styles.card} title='雷达图'></Card>
         </Col>
         <Col md={12} xs={24}>
-          <Card title='路径图'></Card>
+          <Card className={styles.card} title='路径图'></Card>
         </Col>
       </Row>
       <Row>
         <Col md={16} xs={24}>
-          <Card title='矩形树图'></Card>
+          <Card className={styles.card} title='矩形树图'></Card>
         </Col>
         <Col md={8} xs={24}>
-          <Card title='技术栈'></Card>
+          <Card className={styles.card} title='技术栈'></Card>
         </Col>
       </Row>
     </Content>
