@@ -57,7 +57,7 @@ const CustomCharts = (props: { type: string, width: any, height: any}) => {
   }, [option]); // 当 option 变化时重新渲染图表
 
 
-  return <div ref={chartRef} style={{ width: props.width, height: props.height }} className={styles.customChart} ></div>
+  return <div ref={chartRef} style={{ width: props.width, height: props.height, display: 'flex', justifyContent: 'center'}} className={styles.customChart} ></div>
 }
 
 export default CustomCharts;
