@@ -7,10 +7,10 @@ const GlobalSearch: FC = () => {
   const [hovered, setHovered] = useState(false);
 
   const renderContent = (
-    <Card bordered={false} style={{ boxShadow: 'none' }} styles={{ body: { padding: 0 } }}>
+    <Card bordered={false} style={{ boxShadow: 'none' }}>
       <Row>
         <Input placeholder="输入关键字搜索..."
-          variant="borderless"
+          // variant="borderless"
           style={{color: '#aaa'}}
           prefix={<SearchOutlined />}
         />
@@ -36,8 +36,7 @@ const GlobalSearch: FC = () => {
       <ConfigProvider
         theme={{
           components: {
-            Popover: { titleMinWidth: 200 },
-            Tabs: { horizontalMargin: '0' },
+            Popover: { titleMinWidth: 100, width: 100 }
           },
         }}
       >
