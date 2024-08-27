@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
 import { AnnouncementModule } from './announcement/announcement.module';
+import { OrangizationModule } from './orangization/orangization.module';
 import * as path from 'path'
 
 // const isProd = process.env.NODE_ENV == 'production'
@@ -36,6 +37,7 @@ import * as path from 'path'
     RoleModule,
     PermissionModule,
     AnnouncementModule,
+    OrangizationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
