@@ -11,15 +11,7 @@ import {
 } from './server';
 import BreadCrumb from '@/components/BreadCrumb';
 import styles from './index.module.less'
-
-// 加载时间等待 封装
-const waitTime = (time: number = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+import { waitTime } from '@/utils';
 
 export type DataSourceType = {
   Ids: React.Key;

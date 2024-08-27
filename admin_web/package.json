@@ -18,6 +18,7 @@
     "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.0",
     "@nestjs/mapped-types": "*",
+    "@types/lodash": "^4.17.7",
     "@umijs/max": "^4.3.8",
     "antd": "5.11.2",
     "axios": "^1.7.3",

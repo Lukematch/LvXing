@@ -19,10 +19,10 @@ export default {
           exact: true,
       },
       {
-          path: '/smartAdministration/organization',
+          path: '/smartAdministration/orangization',
           name: '组织管理',
           icon: 'team',
-          component: './SmartAdministration/organization',
+          component: './SmartAdministration/orangization',
           // access: 'adminRouteFilter',
           exact: true,
       },
