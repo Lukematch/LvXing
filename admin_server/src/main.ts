@@ -9,6 +9,10 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.useStaticAssets('./upload/image',{
+    prefix: '/assets/'
+  });
+
   // app.useGlobalFilters(new HttpExceptionFilter())
   app.use(session({
     secret: "lvxing",
