@@ -6,9 +6,7 @@ const http = {
       url: config.url,
       method: 'get',
       params: config.params
-      // params:{}
     }
-    // if (params) config.params = params
     return request(configs)
   },
   post(config:{url: string, data: {}}) {
@@ -20,7 +18,17 @@ const http = {
         'Content-Type': 'application/json'
       }
     }
-    // if (params) config.data = params
+    return request(configs)
+  },
+  fileAction(config:{url: string, data: any}) {
+    const configs = {
+      url: config.url,
+      method: 'post',
+      data: config.data,
+      headers: {
+        'Content-Type': 'form-data'
+      }
+    }
     return request(configs)
   },
   patch(config:{url: string, data: {}}){

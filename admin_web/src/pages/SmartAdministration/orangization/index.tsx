@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.less'
 import BreadCrumb from '@/components/BreadCrumb'
 import { useLocation } from '@umijs/max';
-import { Button, Card, Drawer, Form, Modal, Table, message } from 'antd';
+import { Button, Card, Drawer, Form, Modal, Popconfirm, Table, message } from 'antd';
 import { ActionType, DrawerForm, ProCard, ProFormField, ProTable } from '@ant-design/pro-components';
 import { customColumns } from './columns';
-import { addOrangization, getOrangizationList } from './server';
+import { addOrangization, deleteOrangization, getOrangizationList, updateOrangization } from './server';
 import OrangizationFormItem from './components/orangizationFormItem'
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   PlusOutlined
@@ -42,7 +43,7 @@ export default () => {
   const [modalType, setModalType] = useState<'add' | 'edit'>('add')
   const [open, setOpen] = useState<boolean>(false)
 
-  const file = Form.useWatch('file', form);
+  // const files = Form.useWatch('file', form);
 
   // ProFormField获取数据展示
   const [dataSource, setDataSource] = useState<OrangizationType[]>()
@@ -59,9 +60,22 @@ export default () => {
     title: '操作',
     valueType: 'option',
     width: 120,
+    fixed: 'right',
     render: (text, record, _, action) => [
-      <a key="edit" onClick={() => {setOpen(true); setModalType('edit')}}>编辑</a>,
-      <a key="delete">删除</a>,
+      <Popconfirm key="delete" title="请确认是否修改状态" onConfirm={async ()=>{
+        const status = record?.status === '禁用'? '正常' : '禁用'
+        setIsLoading(true)
+        await waitTime(1000)
+        const { data } = await updateOrangization(record?.id, {status: status})
+        data.code === 200 ? message.success('修改成功') : message.error('修改失败')
+        actionRef?.current?.reload()
+      }}>
+        {record?.status === '禁用'? <Button type='link' key="disable">启用</Button> : <Button type='link' key="disable">禁用</Button>}
+      </Popconfirm>,
+      <Button disabled={record?.status === '禁用'} type='link' key="edit" onClick={handleEdit.bind(this, record, 'edit')}>编辑</Button>,
+      <Popconfirm key="delete" title="确定删除吗？" onConfirm={handleDelete.bind(this, record?.id)}>
+        <Button disabled={record?.status === '禁用'} type='link' danger >删除</Button>
+      </Popconfirm>
     ]
   })
 
@@ -73,32 +87,73 @@ export default () => {
     // actionRef.current?.reload()
 	}
 
+  // 处理 新增-编辑-事件
+  const handleEdit = (record: any, type: 'add' | 'edit') => {
+    setOpen(true);
+    setModalType(type);
+    if (type === 'edit') {
+      let file = {
+        uid: uuidv4(),
+        name: record?.logo?.substring(record?.logo?.lastIndexOf('/') + 1),
+        status: 'done',
+        url: record?.logo
+      }
+      record.file = (record?.logo === '' || record?.logo === null)? [] : [file]
+      form.setFieldsValue(record)
+    } else {
+      form.resetFields();
+    }
+  }
+
+  // 删除操作
+  const handleDelete = async (id: string) => {
+    setIsLoading(true)
+    await waitTime(1000);
+    const { data } = id && await deleteOrangization(id)
+    data.code = 200 && message.success('删除成功')
+    data.code !== 200 && message.error('删除失败')
+    actionRef.current?.reload()
+  }
+
   // 提交更新
   const handleFinish = async (values: any) => {
     setIsLoading(true)
     await waitTime(1000);
 
     const { file, ...rest } = values;
-    console.log('Form values:', rest);
-    console.log('Uploaded file:', file);
-      // if(modalType === 'add'){
-      //   console.log('add:'+result);
-      //   console.log('@watch'+file);
-      //   addOrangization(result).then((data: any) => {
-      //     if(data){
-      //       message.success('保存成功')
-      //       setOpen(false)
-      //       // 刷新列表
-      //       actionRef.current?.reload()
-      //       return true
-      //     }
-      //   })
-      // }
-      // if(result?.file && result?.file?.length > 0){
-      //   let logo = result?.file[0]?.response?.fullFilePath
-      //   delete result.file
-      //   result.logo = logo
-      // }
+
+    if(modalType === 'add'){
+      rest.logo = file?.[0]?.response?.data?.url
+      // rest.id = 'lv' + Math.floor(Math.random() * 1000)
+      rest.create_time = new Date()
+      rest.update_time = new Date()
+      addOrangization(rest).then((data: any) => {
+        if(data.code === 200){
+          message.success('保存成功')
+          setOpen(false)
+          // 刷新列表
+          actionRef.current?.reload()
+          return true
+        } else {
+          message.error(data.message)
+        }
+      })
+    }
+    if(modalType === 'edit'){
+      rest.logo = file?.[0]?.response?.data?.url
+      // 更新时间
+      rest.update_time = new Date()
+      updateOrangization(rest.id, rest).then((data: any) => {
+        if(data.code === 200){
+          message.success('保存成功')
+          setOpen(false)
+          // 刷新列表
+          actionRef.current?.reload()
+        } else {
+          message.error(data.message)
+        }
+      })
+    }
   }
 
   return <>
@@ -108,6 +163,9 @@ export default () => {
     <ProTable
     rowKey='id'
     headerTitle='组织管理'
+    rowClassName={(record) =>
+      record.status === '禁用' ? styles.disabledRow : ''
+    }
     actionRef={actionRef}
     scroll={{
       x: 'max-content'
@@ -126,10 +184,7 @@ export default () => {
       <Button
       key="button"
       icon={<PlusOutlined />}
-      onClick={() => {
-        setOpen(true)
-        setModalType('add')
-      }}
+      onClick={handleEdit.bind(this, null, 'add')}
       type="primary"
       >
         新建

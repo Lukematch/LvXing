@@ -35,9 +35,9 @@ export class OrangizationService {
 
   // 更新公告
   async update(id: string, updateOrangizationDto: UpdateOrangizationDto) {
-    if(updateOrangizationDto?.id){
-      return {code: 301, message: '组织编号不可更改！'};
-    }
+    // if(updateOrangizationDto?.id){
+    //   return {code: 301, message: '组织编号不可更改！'};
+    // }
     const existAnnouncement = await this.orangizationRepository.findOne({
       where: { id }
     })

@@ -28,10 +28,10 @@ export default defineConfig({
   },
   proxy: {
     '/api':{
-      target:'http://localhost:3000/',  // 接口域名
+      target:'http://127.0.0.1:3000',
       changeOrigin:true,
       secure:false,
-      rewrite: (path: string) => path.replace('/api', '')
+      // rewrite: (path: string) => path.replace('/api', '/api')
     }
   },
   fastRefresh: true,

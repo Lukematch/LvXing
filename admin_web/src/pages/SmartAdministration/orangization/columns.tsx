@@ -4,6 +4,7 @@ import { OrangizationType } from ".";
 import { randomTagColor } from "@/utils";
 import { mapValues } from "lodash";
 import { TeamOutlined, CopyOutlined } from "@ant-design/icons";
+import { format } from 'date-fns';
 
 export const customColumns: ProColumns<OrangizationType>[] = [
   {
@@ -53,8 +54,8 @@ export const customColumns: ProColumns<OrangizationType>[] = [
   },
   {
     title: '组织类型',
-    dataIndex: 'type',
-    key: 'type',
+    dataIndex: 'class',
+    key: 'class',
     align: 'center',
     width: 80,
     hideInSearch: true,
@@ -74,6 +75,11 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     align: 'center',
     width: 80,
     hideInSearch: true,
+    render: (text, record) => (
+      <Tag color={record.status === '禁用' ? 'red' : 'green'}>
+        {text}
+      </Tag>
+    ),
   },
   {
     title: '排序',
@@ -90,6 +96,11 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     width: 200,
     align: 'center',
     hideInSearch: true,
+    renderText: (text: string) => (
+      <Tooltip title={text}>
+        {text?.length > 25 ? `${text.slice(0, 25)}...` : text}
+      </Tooltip>
+    ),
   },
   {
     title: '创建时间',
@@ -97,6 +108,7 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     key: 'create_time',
     align: 'center',
     hideInSearch: true,
+    render: (text: any) => format(new Date(text), 'yyyy-MM-dd HH:mm:ss'),
   },
   {
     title: '更新时间',
@@ -104,6 +116,7 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     key: 'update_time',
     align: 'center',
     hideInSearch: true,
+    render: (text: any) => format(new Date(text), 'yyyy-MM-dd HH:mm:ss'),
   },
   {
     title: '负责人',

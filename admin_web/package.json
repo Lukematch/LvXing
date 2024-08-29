@@ -19,16 +19,19 @@
     "@emotion/react": "^11.13.0",
     "@nestjs/mapped-types": "*",
     "@types/lodash": "^4.17.7",
+    "@types/uuid": "^10.0.0",
     "@umijs/max": "^4.3.8",
     "antd": "5.11.2",
     "axios": "^1.7.3",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.12",
     "echarts": "^5.5.1",
     "joi": "^17.13.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "react-draggable": "^4.4.6",
-    "runes2": "^1.1.4"
+    "runes2": "^1.1.4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5",

@@ -31,7 +31,7 @@ async function bootstrap() {
     'http://localhost:6400',
   ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
   });
   // app.use(cors())
 

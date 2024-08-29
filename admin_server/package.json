@@ -27,6 +27,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
+    "@types/uuid": "^10.0.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express-session": "^1.18.0",
@@ -35,7 +36,8 @@
     "rxjs": "^7.8.1",
     "svg-captcha": "^1.4.0",
     "trek-captcha": "^0.4.0",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

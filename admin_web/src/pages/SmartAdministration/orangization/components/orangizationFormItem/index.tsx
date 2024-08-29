@@ -1,14 +1,15 @@
-import { ProForm, ProFormDateRangePicker, ProFormDigit, ProFormRadio, ProFormSegmented, ProFormSelect, ProFormText, ProFormTextArea, ProFormTreeSelect, ProFormUploadDragger } from '@ant-design/pro-components'
+import { ProForm, ProFormDateRangePicker, ProFormDigit, ProFormRadio, ProFormSegmented, ProFormSelect, ProFormText, ProFormTextArea, ProFormTreeSelect, ProFormUploadButton, ProFormUploadDragger } from '@ant-design/pro-components'
 import { Select, TreeSelect, Upload, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { getOrangizationList } from '../../server'
 import { OrangizationType } from '../..'
+import { UploadOutlined } from '@ant-design/icons'
 
 const typeOptions = {
-  1: '集团',
-  2: '公司',
-  3: '单位',
-  4: '部门'
+  '集团': '集团',
+  '公司': '公司',
+  '单位': '单位',
+  '部门': '部门'
 }
 
 
@@ -38,6 +39,29 @@ const OrangizationFormItem = () => {
     // showSearch
     // allowClear
     // treeDefaultExpandAll
+    />
+    {/* 组织简称 */}
+    <ProFormText
+    label='组织代号'
+    name='id'
+    placeholder='请输入组织代号'
+    fieldProps={{
+      showCount: true,
+      maxLength: 10,
+    }}
+    rules={[
+      { required: true, message: '' },
+      {
+        validator: (_, value) => {
+          if (!value) {
+            return Promise.reject(new Error('组织代号不能为空！'))
+          } else if (value.substring(0,2) !== 'lv') {
+            return Promise.reject(new Error('组织代号应以“lv”作为开头！'))
+          }
+          return Promise.resolve()
+        },
+      },
+    ]}
     />
     {/* 组织名称 */}
     <ProFormText
@@ -78,54 +102,35 @@ const OrangizationFormItem = () => {
     {/* 组织类型 */}
     <ProFormSegmented
     colProps={{ span: 10 }}
-    name="type"
+    name="class"
     label='组织类型'
     // initialValue={}
     valueEnum={typeOptions}
     rules={[{ required: true }]}
     />
     {/* 负责人 */}
-    <ProFormSelect
+    <ProFormText
     label='负责人'
     name='leader'
-    placeholder='请选择负责人'
+    placeholder='请输入负责人'
     // rules={[{ required: true }]}
     />
     {/* logo */}
-    <ProFormUploadDragger
+    <ProFormUploadButton
     name="file"
     label='logo图标上传'
     colProps={{ span: 24 }}
     max={1}
-    rules= {[ {required: true, message: '请上传附件！'} ]}
+    rules= {[ {required: true, message: '请上传logo！'} ]}
     // extra= '请上传图片'
     tooltip= 'logo类型：jpg、jpeg、png、gif'
     fieldProps={{
+      name: 'file',
       listType: 'picture-card',
-      action: 'https://7bu.top/api/v1/upload',
-      headers: {
-        Authorization: 'Bearer 1468|x2HFab0CZH0UgJjUVqVSQm5TQkiq0qXPJDWTfHkU',
-        'Content-Type': 'multipart/form-data',
-      },
-      // data: {
-      //   // 添加的自定义请求参数
-      //   file: 'file',
-      //   album_id: 1264
-      // },
-      onChange(info) {
-        const { status } = info.file;
-        if (status === 'uploading') {
-          console.log(`${info.file.name} 正在上传中...`);
-        }
-        if (status === 'done') {
-          message.success(`${info.file.name} 上传成功`);
-          console.log('上传响应:', info);
-        } else if (status === 'error') {
-          message.error(`${info.file.name} 上传失败`);
-          console.log('上传错误:', info.file.error);
-        }
-      },
-      multiple: true,
+      // 配置图片上传 本地路径
+      action: '/api/upload/image',
+
+      multiple: false,
       maxCount: 1,
       accept: 'picture/*',
       progress: {
@@ -138,6 +143,7 @@ const OrangizationFormItem = () => {
       },
     }}
     // value={logo}
+    extra="*支持单个图片文件上传且大小不超过10M*"
     />
     {/* 状态 */}
     <ProFormRadio.Group
@@ -147,11 +153,11 @@ const OrangizationFormItem = () => {
     options={[
       {
         label: '正常',
-        value: 'custom',
+        value: '正常',
       },
       {
         label: '禁用',
-        value: 'disabled',
+        value: '禁用',
       },
     ]}
     />
@@ -168,6 +174,9 @@ const OrangizationFormItem = () => {
     <ProFormTextArea
     name='description'
     label='描述'
+    fieldProps={{
+      autoSize: { minRows: 3, maxRows: 10 },  // 根据需要调整 minRows 和 maxRows
+    }}
     />
   </>
 }
