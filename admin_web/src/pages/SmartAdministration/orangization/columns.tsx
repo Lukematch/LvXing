@@ -13,6 +13,7 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     key: 'name',
     // copyable: true,
     // align: 'center',
+    fixed: 'left',
     width: 150,
     ellipsis: true,
     renderText: (text: string) => {

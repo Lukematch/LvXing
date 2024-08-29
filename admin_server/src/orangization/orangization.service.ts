@@ -3,7 +3,7 @@ import { CreateOrangizationDto } from './dto/create-orangization.dto';
 import { UpdateOrangizationDto } from './dto/update-orangization.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Orangization } from './entities/orangization.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class OrangizationService {
@@ -25,8 +25,19 @@ export class OrangizationService {
     return {code: 200, message: '组织创建成功！'};
   }
 
-  findAll() {
-    return this.orangizationRepository.find();
+  async findAll(query?: any) {
+    const { name, code } = query;
+    // console.log(query);
+    const whereConditions: any = {};
+    if (name) {
+      whereConditions.name = Like(`%${name}%`);
+    }
+    if (code) {
+      whereConditions.code = Like(`%${code}%`);
+    }
+    return await this.orangizationRepository.find({
+      where: whereConditions
+    });
   }
 
   // findOne(code: string) {

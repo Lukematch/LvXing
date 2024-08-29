@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { OrangizationService } from './orangization.service';
 import { CreateOrangizationDto } from './dto/create-orangization.dto';
 import { UpdateOrangizationDto } from './dto/update-orangization.dto';
@@ -13,8 +13,8 @@ export class OrangizationController {
   }
 
   @Get()
-  findAll() {
-    return this.orangizationService.findAll();
+  findAll(@Query() query: any) {
+    return this.orangizationService.findAll(query);
   }
 
   // @Get(':code')

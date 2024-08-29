@@ -167,6 +167,13 @@ export default () => {
       record.status === '禁用' ? styles.disabledRow : ''
     }
     actionRef={actionRef}
+    // onSubmit={(params) => {
+    //   // console.log(params)
+    // }}
+    search={{
+      labelWidth: 'auto',
+    }
+    }
     scroll={{
       x: 'max-content'
     }}
@@ -179,7 +186,10 @@ export default () => {
     className={styles.orangization}
     columns={columns}
     // expandable={{ expandedRowRender }}
-    request={getOrangizationList}
+    request={(params: any)=>{
+      const {name, code} = params
+      return getOrangizationList(name, code)
+    }}
     toolBarRender={() => [
       <Button
       key="button"
