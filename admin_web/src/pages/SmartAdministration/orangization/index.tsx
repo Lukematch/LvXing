@@ -175,7 +175,7 @@ export default () => {
     }
     }
     scroll={{
-      x: 'max-content'
+      x: 'max-content',
     }}
     pagination={{
       showSizeChanger: true,
@@ -219,7 +219,9 @@ export default () => {
       <OrangizationFormItem />
     </DrawerForm>
 
-    <ProCard title="表格数据" headerBordered collapsible defaultCollapsed>
+    <ProCard title="表格数据" headerBordered collapsible defaultCollapsed
+    style={{marginBottom: 40}}
+    >
       <ProFormField
         ignoreFormItem
         fieldProps={{

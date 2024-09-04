@@ -7,8 +7,6 @@ import { KeyOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { ConfigProvider } from 'antd';
 //@ts-ignore
-import { css } from '@emotion/css'
-//@ts-ignore
 import { history, useModel } from '@umijs/max';
 import { runes } from 'runes2';
 import {
@@ -18,6 +16,8 @@ import {
 import CustomFooter from '@/components/Footer';
 import { Footer } from 'antd/es/layout/layout';
 import { getUser } from '@/utils/server';
+
+import { createGradientClass } from 'mini-ground'
 
 interface loginUser {
   username: string,
@@ -31,28 +31,10 @@ const LoginPage: FC = () => {
   const [captcha, setCaptcha] = useState<string>('')
   const { initialState, setInitialState } = useModel('@@initialState');
 
-  const { getPrefixCls } = useContext<any>(ConfigProvider.ConfigContext);
-  const rootPrefixCls = getPrefixCls();
-  const linearGradientButton = css`
-    &.${rootPrefixCls}-btn-primary:not([disabled]):not(.${rootPrefixCls}-btn-dangerous) {
-      border-width: 0;
-      > span {
-        position: relative;
-      }
-      &::before {
-        content: '';
-        background: linear-gradient(45deg,#16c8c8, #40a440);
-        position: absolute;
-        inset: 0;
-        opacity: 1;
-        transition: all 0.3s;
-        border-radius: inherit;
-      }
-      &:hover::before {
-        opacity: 0;
-      }
-    }
-  `;
+  // 登录按钮 样式
+  const linearGradientButton = createGradientClass('45deg', '#16c8c8', 'orange')
+  const loginBtnClassName = `${styles.loginBtn} ${linearGradientButton}`
+
   const LoginHome = () => {
     // history.push("/home");
     form.validateFields().then((result: loginUser) => {
@@ -115,9 +97,9 @@ const LoginPage: FC = () => {
 
   return (
     <ConfigProvider
-    button={{
-      className: linearGradientButton,
-    }}
+    // button={{
+    //   className: linearGradientButton,
+    // }}
     >
     <div>
       <div className={styles.container}>
@@ -135,6 +117,7 @@ const LoginPage: FC = () => {
         // }}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
+        onFinish={LoginHome}
         >
           <Form.Item
           name="username"
@@ -186,13 +169,14 @@ const LoginPage: FC = () => {
               ></span>
             </Row>
           </Form.Item>
-            <Button
-            type='primary'
-            className={styles.loginBtn}
-            onClick={LoginHome}
-            >
-              登录
-            </Button>
+          <Button
+          type='primary'
+          htmlType="submit"
+          className={loginBtnClassName}
+          // onClick={LoginHome}
+          >
+            登录
+          </Button>
         </Form>
       </Card>
       </Row>

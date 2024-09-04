@@ -29,6 +29,7 @@
     "joi": "^17.13.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
+    "mini-ground": "^1.1.8",
     "react-draggable": "^4.4.6",
     "runes2": "^1.1.4",
     "uuid": "^10.0.0"

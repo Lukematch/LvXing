@@ -39,7 +39,15 @@ const CustomFooter: React.FC = () => {
       </a>
       <Modal
       className={styles.modal}
-      mask={false}
+      // mask={false}
+      maskStyle={{
+        backgroundColor: 'rgba(0, 0, 0, 0.45)',
+        transition: 'opacity 0.3s ease', /* 渐变过渡效果 */
+        opacity: 1,
+        // 模糊化
+        backdropFilter: 'blur(5px)',
+        WebkitBackdropFilter: 'blur(5px)' // 兼容 Safari
+      }}
       title={
         <div style={{
           width: '100%',
@@ -79,8 +87,8 @@ const CustomFooter: React.FC = () => {
       )}
       >
         <Card
-       hoverable
-       style={{ width: 'auto', height: 400, display: 'flex', alignItems: 'center' }}
+      //  hoverable
+        style={{ width: 'auto', height: 400, display: 'flex', alignItems: 'center' }}
         // key={item.img}
         // 卡片封面
         cover={

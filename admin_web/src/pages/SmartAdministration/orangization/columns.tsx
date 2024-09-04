@@ -1,5 +1,5 @@
 import { ProColumns } from "@ant-design/pro-components";
-import { Tag, Tooltip, message } from "antd";
+import { Image, Tag, Tooltip, message } from "antd";
 import { OrangizationType } from ".";
 import { randomTagColor } from "@/utils";
 import { mapValues } from "lodash";
@@ -46,12 +46,25 @@ export const customColumns: ProColumns<OrangizationType>[] = [
     dataIndex: 'logo',
     key: 'logo',
     align: 'center',
-    valueType: {
-      type: 'image',
-      width: 60,
-    },
+    valueType:  'image',
     width: 80,
     hideInSearch: true,
+    render: (_, record) => (
+      <Image
+      width={60}
+      src={record.logo}
+      preview={{
+        maskStyle: {
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          transition: 'opacity 0.3s ease', /* 渐变过渡效果 */
+          opacity: 1,
+          // 模糊化
+          backdropFilter: 'blur(5px)',
+          WebkitBackdropFilter: 'blur(5px)' // 兼容 Safari
+        },
+      }}
+      />
+    )
   },
   {
     title: '组织类型',
