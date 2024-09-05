@@ -5,6 +5,7 @@ import { pieOption, pieData } from '../chartOptions/pieCharts.columns';
 import { lineOption, lineData } from '../chartOptions/lineCharts.columns';
 import { barData, barOption } from '../chartOptions/barCharts.columns';
 import { scatterData, scatterOption } from '../chartOptions/scatterCharts.columns';
+import { graphOrgData, graphOrgOption } from '@/pages/SmartAdministration/organizationalStructure/columns';
 
 const CustomCharts = (props: { type: string, width: any, height: any}) => {
   const [data, setData]: any = useState([])
@@ -36,6 +37,9 @@ const CustomCharts = (props: { type: string, width: any, height: any}) => {
         setData(scatterData)
         setOption(scatterOption)
         break;
+      case 'graph_org':
+        setData(graphOrgData)
+        setOption(graphOrgOption)
       default:
         break;
     }

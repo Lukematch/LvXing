@@ -190,6 +190,15 @@ export default () => {
       const {name, code} = params
       return getOrangizationList(name, code)
     }}
+    onLoad={async ()=>{
+      await waitTime(1000).then(()=>{
+        setIsLoading(false)
+      })
+    }}
+    onRequestError={()=>{
+      setIsLoading(false)
+      message.error('数据请求失败')
+    }}
     toolBarRender={() => [
       <Button
       key="button"

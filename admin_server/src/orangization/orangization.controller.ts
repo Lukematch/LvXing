@@ -17,18 +17,18 @@ export class OrangizationController {
     return this.orangizationService.findAll(query);
   }
 
-  // @Get(':code')
-  // findOne(@Param('code') id: string) {
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
   //   return this.orangizationService.findOne(id);
   // }
 
-  @Patch(':code')
-  update(@Param('code') id: string, @Body() updateOrangizationDto: UpdateOrangizationDto) {
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateOrangizationDto: UpdateOrangizationDto) {
     return this.orangizationService.update(id, updateOrangizationDto);
   }
 
-  @Delete(':code')
-  remove(@Param('code') id: string) {
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.orangizationService.remove(id);
   }
 }

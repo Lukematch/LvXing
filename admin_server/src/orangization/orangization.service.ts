@@ -44,7 +44,7 @@ export class OrangizationService {
   //   return `This action returns a #${code} orangization`;
   // }
 
-  // 更新公告
+  // 更新组织信息
   async update(id: string, updateOrangizationDto: UpdateOrangizationDto) {
     // if(updateOrangizationDto?.id){
     //   return {code: 301, message: '组织编号不可更改！'};
@@ -66,7 +66,7 @@ export class OrangizationService {
     return {code: 200, message: '组织信息更新成功！'};
   }
 
-  // 删除公告
+  // 删除组织
   async remove(id: string) {
     const existAnnouncement = await this.orangizationRepository.findOne({
       where: { id }

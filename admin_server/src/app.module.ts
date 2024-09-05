@@ -11,6 +11,7 @@ import { PermissionModule } from './permission/permission.module';
 import { AnnouncementModule } from './announcement/announcement.module';
 import { OrangizationModule } from './orangization/orangization.module';
 import { FileModule } from './file/file.module';
+import { PositionModule } from './position/position.module';
 import * as path from 'path'
 
 // const isProd = process.env.NODE_ENV == 'production'
@@ -40,6 +41,7 @@ import * as path from 'path'
     AnnouncementModule,
     OrangizationModule,
     FileModule,
+    PositionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

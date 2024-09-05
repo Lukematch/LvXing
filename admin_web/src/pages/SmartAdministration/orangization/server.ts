@@ -23,6 +23,8 @@ export const getOrangizationList = (name?: string, code?: string) => {
         if (parent) {
           // 使用非空断言
           parent.children!.push(map.get(item.id)!);
+        } else {
+          tree.push(map.get(item.id)!);
         }
       } else {
         // 没有 parent_id，则为根节点
