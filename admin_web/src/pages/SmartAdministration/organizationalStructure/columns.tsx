@@ -1,106 +1,68 @@
 import { getOrangizationList } from "../orangization/server"
 
 export const graphOrgData = async () => {
-  await getOrangizationList().then(res => {
-    console.log(res.data);
-    return res.data
-  })
-
-}
-
-export const graphOrgOption = {
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '25%',
-    containLabel: true
-  },
-  tooltip: {},
-  animationDurationUpdate: 1500,
-  animationEasingUpdate: 'quinticInOut',
-  series: [
+  const res = await getOrangizationList();
+  console.log(res.data);
+  return [
     {
-      type: 'graph',
-      layout: 'none',
-      symbolSize: 50,
-      roam: true,
-      label: {
-        show: true
-      },
-      edgeSymbol: ['circle', 'arrow'],
-      edgeSymbolSize: [4, 10],
-      edgeLabel: {
-        fontSize: 20
-      },
-      data: [
-        {
-          name: 'Node 1',
-          x: 300,
-          y: 300
-        },
-        {
-          name: 'Node 2',
-          x: 800,
-          y: 300
-        },
-        {
-          name: 'Node 3',
-          x: 550,
-          y: 100
-        },
-        {
-          name: 'Node 4',
-          x: 550,
-          y: 500
-        }
-      ],
-      // links: [],
-      links: [
-        {
-          source: 0,
-          target: 1,
-          symbolSize: [5, 20],
-          label: {
-            show: true
-          },
-          lineStyle: {
-            width: 5,
-            curveness: 0.2
-          }
-        },
-        {
-          source: 'Node 2',
-          target: 'Node 1',
-          label: {
-            show: true
-          },
-          lineStyle: {
-            curveness: 0.2
-          }
-        },
-        {
-          source: 'Node 1',
-          target: 'Node 3'
-        },
-        {
-          source: 'Node 2',
-          target: 'Node 3'
-        },
-        {
-          source: 'Node 2',
-          target: 'Node 4'
-        },
-        {
-          source: 'Node 1',
-          target: 'Node 4'
-        }
-      ],
-      lineStyle: {
-        opacity: 0.9,
-        width: 2,
-        curveness: 0
-      }
+      name: '组织架构',
+      children: res.data
     }
   ]
+};
 
+export const graphOrgOption = async () => {
+  const data = await graphOrgData();
+  return {
+    grid: {
+      // left: '5%',
+      // right: '5%',
+      bottom: '30%',
+      containLabel: true
+    },
+    tooltip: {
+      trigger: 'item',  // 在节点上显示提示
+      triggerOn: 'mousemove',
+      formatter: function (params: any) {
+        return params.name;  // 只显示名称
+      }
+    },
+    // animationDurationUpdate: 1200,
+    expandAndCollapse: true,  // 支持节点折叠展开
+    animationDuration: 750,  // 动画时长
+    // animationEasingUpdate: 'quinticInOut',
+    series: [
+      {
+        type: 'tree',
+        layout: 'orthogonal',
+        // symbolSize: 50,
+        // symbol: 'roundRect',
+        symbol: 'rect',
+        symbolSize: [60, 40],
+        roam: true,
+        orient: 'TB',  // 'TB'表示从上到下，'LR'表示从左到右
+        edgeShape: 'polyline',
+        edgeSymbol: ['none', 'none'],
+        // edgeSymbolSize: [0, 10],
+        label: {
+          verticalAlign: 'middle',
+          align: 'middle',
+        },
+        edgeLabel: {
+          fontSize: 12
+        },
+        lineStyle: {
+          curveness: 0,  // 使连接线为直线
+          width: 2
+        },
+        // symbolSize: 7,
+        edgeForkPosition: '30%',
+        // initialTreeDepth: 3,
+        emphasis: {
+          focus: 'descendant'
+        },
+        data: data
+      }
+    ]
+  }
 }

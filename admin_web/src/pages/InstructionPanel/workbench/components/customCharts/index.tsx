@@ -6,6 +6,10 @@ import { lineOption, lineData } from '../chartOptions/lineCharts.columns';
 import { barData, barOption } from '../chartOptions/barCharts.columns';
 import { scatterData, scatterOption } from '../chartOptions/scatterCharts.columns';
 import { graphOrgData, graphOrgOption } from '@/pages/SmartAdministration/organizationalStructure/columns';
+import { Spin } from 'antd';
+import {
+  LoadingOutlined
+} from '@ant-design/icons';
 
 const CustomCharts = (props: { type: string, width: any, height: any}) => {
   const [data, setData]: any = useState([])
@@ -38,8 +42,11 @@ const CustomCharts = (props: { type: string, width: any, height: any}) => {
         setOption(scatterOption)
         break;
       case 'graph_org':
-        setData(graphOrgData)
-        setOption(graphOrgOption)
+        graphOrgOption().then(option => {
+          setOption(option)
+        })
+        // setData(graphOrgData)
+        break;
       default:
         break;
     }
@@ -49,7 +56,7 @@ const CustomCharts = (props: { type: string, width: any, height: any}) => {
     if (chartRef.current && option) {
       customChart.current = echarts.init(chartRef?.current)
       option && customChart.current?.setOption(option)
-      console.log(customChart.current);
+      // console.log(customChart.current);
     }
     return () => {
       // 组件卸载时销毁图表实例
@@ -61,7 +68,11 @@ const CustomCharts = (props: { type: string, width: any, height: any}) => {
   }, [option]); // 当 option 变化时重新渲染图表
 
 
-  return <div ref={chartRef} style={{ width: props.width, height: props.height, display: 'flex', justifyContent: 'center'}} className={styles.customChart} ></div>
+  return <>
+    {option? <div ref={chartRef} style={{ width: props.width, height: props.height, display: 'flex', justifyContent: 'center'}} className={styles.customChart} ></div>:
+    <Spin indicator={<LoadingOutlined spin />} />
+    }
+  </>
 }
 
 export default CustomCharts;

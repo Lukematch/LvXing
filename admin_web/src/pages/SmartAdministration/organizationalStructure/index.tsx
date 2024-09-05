@@ -14,7 +14,7 @@ export default function () {
       <BreadCrumb location={location}/>
     </div>
     <div className={styles.content}>
-      <CustomCharts type='graph_org' width={'auto'} height={600} />
+      <CustomCharts type='graph_org' width={'100%'} height={600} />
     </div>
   </>
 }

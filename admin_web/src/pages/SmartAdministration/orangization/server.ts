@@ -5,7 +5,7 @@ import { OrangizationType } from "."
  * @returns 获取组织列表
  */
 export const getOrangizationList = (name?: string, code?: string) => {
-  console.log(name, code);
+  // console.log(name, code);
   return http.get({url: "/api/orangization/", params: {name, code}}).then((res: any) => {
     const { data } = res
     const tree: OrangizationType[] = []
