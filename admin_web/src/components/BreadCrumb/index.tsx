@@ -34,12 +34,12 @@ const BreadCrumb = ({location}: any) => {
   return (
     <div>
       <Breadcrumb>
-      {breadcrumbItems?.map(({ breadcrumbName }: any, index: any) => (
-        <Breadcrumb.Item key={index}>
-          {breadcrumbName}
-        </Breadcrumb.Item>
-      ))}
-    </Breadcrumb>
+        {breadcrumbItems?.map(({ breadcrumbName }: any, index: any) => (
+          <Breadcrumb.Item key={index}>
+            {breadcrumbName}
+          </Breadcrumb.Item>
+        ))}
+      </Breadcrumb>
     </div>
   )
 }

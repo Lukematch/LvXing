@@ -21,7 +21,9 @@ const NoticeBell: FC = () => {
     },
   ]
   const renderContent = (
-    <Card bordered={false} style={{ boxShadow: 'none' }} styles={{ body: { padding: 0 } }}>
+    <Card bordered={false} style={{ boxShadow: 'none' }}
+    // styles={{ body: { padding: 0 } }}
+    >
       <List
         itemLayout="horizontal"
         // dataSource={get(announcementList, 'list', [])}
@@ -31,7 +33,7 @@ const NoticeBell: FC = () => {
           align: 'center',
           size: 'small',
           // total: get(announcementList, 'total', 0),
-          hideOnSinglePage: true,
+          hideOnSinglePage: true
         }}
         renderItem={(record: any) => (
           <List.Item>

@@ -55,12 +55,8 @@ export const customColumns: ProColumns<OrangizationType>[] = [
       src={record.logo}
       preview={{
         maskStyle: {
-          backgroundColor: 'rgba(0, 0, 0, 0.45)',
-          transition: 'opacity 0.3s ease', /* 渐变过渡效果 */
-          opacity: 1,
-          // 模糊化
           backdropFilter: 'blur(5px)',
-          WebkitBackdropFilter: 'blur(5px)' // 兼容 Safari
+          WebkitBackdropFilter: 'blur(5px)'
         },
       }}
       />

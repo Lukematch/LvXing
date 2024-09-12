@@ -5,7 +5,6 @@ import { InitDataType, Link, RunTimeLayoutConfig } from '@umijs/max';
 import {
   actionsRender,
   avatarProps,
-
 } from './components';
 import { getRoutes } from '@/../config/router/getroutes';
 import { iconMap } from '@/services/icon';
@@ -38,13 +37,12 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     // rightContentRender: () => <RightContent/>,
     footerRender: ( )=> <CustomFooter />,
     menu: {
-      locale: false,
       request: async () => {
         const routes = await getRoutes();
         // console.log(routes);
         // 根据需求处理从后端返回的数据
         const convertRoutes = (route: any) => {
-          console.log(route);
+          // console.log(route);
           // console.log('Route icon:', route.icon);
           return {
             path: route.path,

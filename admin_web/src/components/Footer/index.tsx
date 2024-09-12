@@ -1,8 +1,8 @@
-import { Button, Card, Col, Drawer, Row } from 'antd';
+import { Button, Card, Col, Drawer, Row, Space } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 import React, { useState } from 'react';
 import styles from './index.module.less';
-import { DragOutlined } from '@ant-design/icons';
+import { HolderOutlined } from '@ant-design/icons';
 // import type { DraggableData, DraggableEvent } from 'react-draggable';
 import  Draggable from 'react-draggable';
 import { Modal, Image } from 'antd';
@@ -10,10 +10,9 @@ import Meta from 'antd/es/card/Meta';
 
 
 const content = "踏遍山河梦，万里同行心。\n风光正独好，星辰映照情。\n途经千重路，岁月如歌行。\n愿随风中梦，长河共此生。浮生 | Luke & GPT 4o\n\n ———李思训 | 江帆楼阁图"
-const CustomFooter: React.FC = () => {
 
+const CustomFooter: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const [disabled, setDisabled] = useState(true);
 
   return (
     <Footer className={styles.footer}>
@@ -39,49 +38,22 @@ const CustomFooter: React.FC = () => {
       </a>
       <Modal
       className={styles.modal}
-      // mask={false}
       maskStyle={{
-        backgroundColor: 'rgba(0, 0, 0, 0.45)',
-        transition: 'opacity 0.3s ease', /* 渐变过渡效果 */
-        opacity: 1,
         // 模糊化
         backdropFilter: 'blur(5px)',
         WebkitBackdropFilter: 'blur(5px)' // 兼容 Safari
       }}
       title={
-        <div style={{
-          width: '100%',
-          cursor: 'move',
-          backgroundColor: 'rgb(22,200,200)',
-          padding: '15px',
-          borderRadius: '4px',
-          display: 'flex',
-          alignItems: 'center'
-        }}
-          onMouseOver={() => {
-            disabled && setDisabled(false);
-          }}
-          onMouseOut={() => {
-            setDisabled(true);
-          }}
-        >
-          <span>
-            LvXing | 旅行
-          </span>
-          <DragOutlined
-          style={{
-            marginLeft: '120px'
-          }}/>
-        </div>
+        <Space style={{display: 'flex'}}>
+          <span>LvXing | 旅行</span>
+          <HolderOutlined style={{marginLeft: '140px', cursor: 'move'}}/>
+        </Space>
       }
       open={visible}
       onCancel={()=>setVisible(false)}
       footer={null}
       modalRender={modal => (
-        <Draggable
-          disabled={disabled}
-          // bounds={bounds}
-        >
+        <Draggable disabled={false}>
           <div>{modal}</div>
         </Draggable>
       )}
@@ -102,17 +74,6 @@ const CustomFooter: React.FC = () => {
             <Meta style={{textAlign:'center'}} description={content}/>
           </div>
         </Card>
-        {/* <Row>
-          div>2}>
-            <Image  />
-          </Col>
-          <Col span={12}>
-            踏遍山河梦，万里同行心。
-            风光正独好，星辰映照情。
-            途经千重路，岁月如歌行。
-            愿随风中梦，长河共此生。
-          </Col>
-        </Row> */}
       </Modal>
     </Footer>
 

@@ -13,7 +13,7 @@ export class RoleController {
     return this.roleService.create(createRoleDto);
   }
 
-  // 获取所以角色
+  // 获取所有角色
   @Get()
   findAll() {
     return this.roleService.findAll();

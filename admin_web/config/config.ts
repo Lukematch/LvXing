@@ -24,7 +24,6 @@ export default defineConfig({
     hasDropdown: false,
   },
   layout: {
-    // locale: 'zh-CN',
     // siderWidth: 240,
     ...defaultSettings,
     contentStyle: { padding: 0 },
@@ -39,7 +38,7 @@ export default defineConfig({
   },
   fastRefresh: true,
   locale: {
-    // default: 'zh-CN',
+    default: 'zh-CN',
     antd: true,
     // baseNavigator: true,
   },

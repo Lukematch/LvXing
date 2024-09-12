@@ -16,7 +16,7 @@ const GlobalSearch: FC = () => {
         />
       </Row>
       <Spin spinning={false}>
-      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       </Spin>
     </Card>
   );
@@ -37,7 +37,7 @@ const GlobalSearch: FC = () => {
         theme={{
           components: {
             Popover: { titleMinWidth: 100, width: 100 }
-          },
+          }
         }}
       >
         <Popover title={

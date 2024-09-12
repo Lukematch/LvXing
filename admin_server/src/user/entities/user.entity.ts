@@ -29,13 +29,6 @@ export class User {
   @Column({nullable: true})
   salt: string
 
-  // 关联Role表 多对多
-  // @ManyToMany(() => Role)
-  // @JoinTable({
-  //   name: 'user_role_relation'
-  // })
-  // role: Role[]
-
   @Column(
     { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }
     )
@@ -51,5 +44,12 @@ export class User {
     this.salt = crypto.randomBytes(4).toString('base64')
     this.password = encry(this.password, this.salt)
   }
+
+  // 关联Role表 多对多
+  // @ManyToMany(() => Role)
+  // @JoinTable({
+  //   name: 'user_role_relation'
+  // })
+  // role: Role[]
 
 }
