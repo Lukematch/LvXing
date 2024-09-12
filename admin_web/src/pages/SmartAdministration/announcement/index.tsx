@@ -122,8 +122,8 @@ export default () => {
       }}
 
       editable={{
-        // type: 'multiple',
-        type: 'single',
+        type: 'multiple',
+        // type: 'single',
         editableKeys,
         // 提交修改 保存
         onSave: async (rowKey, data, row) => {

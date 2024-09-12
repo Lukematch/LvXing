@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@alita/plugins": "^3.5.3",
-    "@ant-design/icons": "^5.0.1",
-    "@ant-design/pro-components": "^2.4.4",
+    "@ant-design/icons": "^5.4.0",
+    "@ant-design/pro-components": "2.7.9",
     "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.0",
     "@nestjs/mapped-types": "*",
@@ -32,6 +32,7 @@
     "mini-ground": "^1.1.8",
     "react-draggable": "^4.4.6",
     "runes2": "^1.1.4",
+    "umi-plugin-antd-icon-config": "^3.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
