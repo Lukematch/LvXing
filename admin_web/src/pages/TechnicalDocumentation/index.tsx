@@ -1,10 +1,13 @@
+import BreadCrumb from '@/components/BreadCrumb'
+import { useLocation } from '@umijs/max';
 import React from 'react'
+import styles from './index.module.less';
 
-export default function () {
-  return (
-    <div>
-      Hello Umi Max
-      <span>technicalDocumentation</span>
+export default () => {
+  const location = useLocation();
+  return <>
+    <div className={styles.breadCrumb}>
+      <BreadCrumb location={location}/>
     </div>
-  )
+  </>
 }
