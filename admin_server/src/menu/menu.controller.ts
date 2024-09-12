@@ -12,9 +12,10 @@ export class MenuController {
     return this.menuService.create(createMenuDto);
   }
 
-  @Get()
-  findAll(@Request() req) {
-    return this.menuService.findAll(req.user);
+  // 获取菜单列表
+  @Post('/user')
+  findAll(@Body() user: any) {
+    return this.menuService.findAll(user);
   }
 
   @Get(':id')

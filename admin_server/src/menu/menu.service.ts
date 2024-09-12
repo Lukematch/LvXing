@@ -12,7 +12,7 @@ export class MenuService {
   constructor(
     @InjectRepository(Menu)
     private readonly menu: Repository<Menu>,
-    @InjectRepository(Menu)
+    @InjectRepository(User)
     private readonly userRepository: Repository<User>
   ) {}
 
@@ -20,34 +20,28 @@ export class MenuService {
     return 'This action adds a new menu';
   }
 
-  async findAll(user) {
-    const userList: User = await this.userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.roles', 'role')
-      .leftJoinAndSelect('role.menus', 'menu')
-      .where({ username: user.username })
-      .orderBy('menu.orderNum', 'ASC')
-      .getOne();
-
-    interface MenuMap {
-      [key: string]: Menu;
+  async findAll(user: any) {
+    const theUser: User = await this.userRepository.findOne({
+      where: {
+        username: user.username
+      }
+    })
+    switch (theUser.role) {
+      case 'root':
+        return this.menu.find();
+      case 'user':
+        return this.menu.find({
+          where: {
+            menuType: 'guest' || 'user',
+          }
+        });
+      case 'guest':
+        return this.menu.find({
+          where: {
+            menuType: 'guest',
+          }
+        });
     }
-
-    // const menus: MenuMap = userList?.roles.reduce(
-    //   (mergedMenus: MenuMap, role: any) => {
-    //     role.menus.forEach((menu: Menu) => {
-    //       mergedMenus[menu.id] = menu;
-    //     });
-    //     return mergedMenus;
-    //   },
-    //   {},
-    // );
-
-    // 去重后的菜单数组
-    // const uniqueMenus: Menu[] = Object.values(menus);
-
-    // return convertToTree(uniqueMenus);
-    // return this.menu.find();
   }
 
   findOne(id: number) {

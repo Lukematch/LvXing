@@ -24,17 +24,17 @@ export class User {
   email: string
 
   @Column({nullable: true})
-  roles: string
+  role: string
 
   @Column({nullable: true})
   salt: string
 
   // 关联Role表 多对多
-  @ManyToMany(() => Role)
-  @JoinTable({
-    name: 'user_role_relation'
-  })
-  role: Role[]
+  // @ManyToMany(() => Role)
+  // @JoinTable({
+  //   name: 'user_role_relation'
+  // })
+  // role: Role[]
 
   @Column(
     { type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }

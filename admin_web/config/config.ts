@@ -1,13 +1,16 @@
 import { defineConfig } from "@umijs/max";
 import defaultSettings from './defaultSettings';
 import routes from './routes'
+// import { getRoutes } from "./router/getroutes";
 
 
 export default defineConfig({
   plugins: [
+    // require.resolve('@alita/plugins/dist/keepalive'),
     require.resolve('@alita/plugins/dist/keepalive'),
     require.resolve('@alita/plugins/dist/tabs-layout'),
   ],
+  // icons: { autoInstall: {} },
   hash: true,
   access: {},
   model: {},
@@ -36,7 +39,7 @@ export default defineConfig({
   },
   fastRefresh: true,
   locale: {
-    default: 'zh-CN',
+    // default: 'zh-CN',
     antd: true,
     // baseNavigator: true,
   },

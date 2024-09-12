@@ -21,7 +21,7 @@ export class UserService {
 
   // 新增用户
   async create(createUserDto: CreateUserDto) {
-    const { username, password, roleIds } = createUserDto
+    const { username, password, roleId } = createUserDto
     const existUser = await this.userRepository.findOne({
       where: { username }
     })
@@ -30,16 +30,16 @@ export class UserService {
     }
     try {
        //查询数组roleIds对应所有role的实例
-       const roles = await this.roleRepository.find({
+      const role = await this.roleRepository.findOne({
         where: {
-          id: In(roleIds),
+          id: roleId,
         },
       });
       const newUser = await this.userRepository.create({
         ...createUserDto,
         username,
         password,
-        role:roles
+        role: role.name === '超级管理员'? 'root' : role.name === '普通用户'? 'user' : 'guest',
       })
       await this.userRepository.save(newUser)
       return {success: true, message: '用户注册成功！'}
