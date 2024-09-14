@@ -33,7 +33,7 @@ export class AuthService {
 
   // 用户登录
   async login(req, session, loginAuthDto) {
-    console.log('Session at login:', session);
+    // console.log('Session at login:', session);
     const { username, password, code } = loginAuthDto
     const user = await this.userService.findByUser(username)
     if(!user){

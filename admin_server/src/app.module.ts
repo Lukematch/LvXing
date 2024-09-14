@@ -12,6 +12,7 @@ import { AnnouncementModule } from './announcement/announcement.module';
 import { OrangizationModule } from './orangization/orangization.module';
 import { FileModule } from './file/file.module';
 import { PositionModule } from './position/position.module';
+import { HobbyModule } from './hobby/hobby.module';
 import * as path from 'path'
 
 // const isProd = process.env.NODE_ENV == 'production'
@@ -42,6 +43,7 @@ import * as path from 'path'
     OrangizationModule,
     FileModule,
     PositionModule,
+    HobbyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
