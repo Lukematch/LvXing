@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { In, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
+import encry from '../utils/crypto';
+
 import {
   HttpException,
   HttpStatus
@@ -19,38 +20,86 @@ export class UserService {
     private readonly roleRepository: Repository<Role>
   ){}
 
-  // 新增用户
-  async create(createUserDto: CreateUserDto) {
-    const { username, password, roleId } = createUserDto
+  async resetPw(body:{pw: string, id: number}) {
+    const { pw, id } = body
     const existUser = await this.userRepository.findOne({
-      where: { username }
+      where: { id }
     })
-    if(existUser) {
-      return {code: 401, message: '用户已存在！'}
+    if(!existUser) {
+      return {code: 401, success: false, message: '不存在该用户！'}
     }
+    existUser.password = encry(pw, existUser.salt)
+    await this.userRepository.save(existUser)
+    return {code: 200, success: true, message: '密码重置成功！'}
+  }
+
+  // 更新用户
+  async update(body: {params: UpdateUserDto, id?: number}) {
+    // console.log(body);
+    const { params, id } = body
+    const { username, role } = params
     try {
-       //查询数组roleIds对应所有role的实例
-      const role = await this.roleRepository.findOne({
+      const oneRole = await this.roleRepository.findOne({
         where: {
-          id: roleId,
+          code: role,
         },
-      });
-      const newUser = await this.userRepository.create({
-        ...createUserDto,
-        username,
-        password,
-        role: role.name === '超级管理员'? 'root' : role.name === '普通用户'? 'user' : 'guest',
       })
-      await this.userRepository.save(newUser)
-      return {success: true, message: '用户注册成功！'}
+      const existUser = await this.userRepository.findOne({
+        where: { username }
+      })
+      if(!id && existUser) {
+        return {code: 401,success: false, message: '已存在该用户名！'}
+      }
+      if(!oneRole) {
+        return {code:401,success: false, message: '不存在角色！'}
+      }
+      // console.log(id);
+      // 不存在当前用户 注册用户
+      if(!id) {
+        const newUser = await this.userRepository.create(params)
+        await this.userRepository.save(newUser)
+        return {code: 200, success: true, message: '用户注册成功！'}
+      } else {
+        const existUserId = await this.userRepository.findOne({
+          where: { id }
+        })
+        // 存在当前用户 更新用户信息
+        if(existUserId){
+          let update = {}
+          // 去空值
+          Object.keys(params).map((key)=> {
+            let value = params[key];
+            if(value !== null && value !== undefined && value !== '') update[key] = value
+          })
+          // console.log(update);
+          await this.userRepository.update(id, update)
+          return {code: 200, success: true, message: '用户信息更新成功'};
+        // 不存在当前用户
+        } else {
+          return {code: 404,success: false, message: '不存在该用户！'}
+        }
+      }
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
   // 查询所有用户
-  findAll() {
-    // throw new ApiException('禁止访问！', ApiErrorCode.NOFOUND)
-    return this.userRepository.find();
+  async findAll(query: any) {
+    const { username, nickName, role } = query;
+    // console.log(query);
+    const whereConditions: any = {};
+    if (username) {
+      whereConditions.username = Like(`%${username}%`);
+    }
+    if (nickName) {
+      whereConditions.nickName = Like(`%${nickName}%`);
+    }
+    if (role) {
+      whereConditions.role = role;
+    }
+    return await this.userRepository.find({
+      where: whereConditions
+    });
   }
 
   // 查询单个用户
@@ -62,11 +111,16 @@ export class UserService {
     return user;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const existUser = await this.userRepository.findOne({
+      where: { id }
+    })
+    if (!existUser) {
+      return {code: 401, message: '该用户不存在！'}
+    } else if (existUser?.username === 'lv0001' || existUser?.username === 'lv0002') {
+      return {code: 301, message: '不可删除该内测用户！'}
+    }
+    await this.userRepository.delete(id)
+    return {code: 200, message: '用户删除成功！'}
   }
 }
