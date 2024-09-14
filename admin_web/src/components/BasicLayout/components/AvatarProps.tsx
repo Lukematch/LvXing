@@ -17,6 +17,14 @@ export default function AvatarProps(): HeaderProps['avatarProps'] {
     try{
       refresh()
       localStorage.clear()
+      // 清空 initialState
+      setInitialState({
+        user: undefined,
+        name: undefined,
+        avatar: undefined,
+        loading: false,
+        RouteMenu: [],
+      });
       history.push('/user/login')
       message.success('退出登录成功')
     } catch (error) {

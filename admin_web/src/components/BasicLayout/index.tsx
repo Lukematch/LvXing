@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import CustomFooter from '../Footer';
 import { Space } from 'antd';
 import { InitDataType, Link, RunTimeLayoutConfig } from '@umijs/max';
@@ -12,10 +12,10 @@ import Layout from '@/.umi/plugin-layout/Layout';
 import Paragraph from 'antd/es/skeleton/Paragraph';
 import { PageLoading, useIntl } from '@ant-design/pro-components';
 
-export const BasicLayout: RunTimeLayoutConfig = ({
+export const BasicLayout: RunTimeLayoutConfig =  ({
   initialState,
   setInitialState,
-}: InitDataType) => {
+}) => {
   const renderMenuIcon = (icon: string | null | undefined) => {
     return <div style={{color: '#aaa'}}>
       {iconMap[icon!]}
@@ -36,10 +36,9 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     avatarProps: avatarProps(),
     // rightContentRender: () => <RightContent/>,
     footerRender: ( )=> <CustomFooter />,
-    menu: {
+    menu:  {
+      key: initialState?.user?.username, // 使用用户名作为 key
       request: async () => {
-        const routes = await getRoutes();
-        // console.log(routes);
         // 根据需求处理从后端返回的数据
         const convertRoutes = (route: any) => {
           return {
@@ -51,33 +50,33 @@ export const BasicLayout: RunTimeLayoutConfig = ({
             routes: route.routes ? route.routes.map(convertRoutes) : [],
           };
         };
-        return routes?.map(convertRoutes);
+        return initialState?.RouteMenu?.map(convertRoutes) || [];
       },
-    },
-    // 自定义的 menuItemRender 函数
-    menuItemRender: ({ icon, path, pro_layout_parentKeys }, defaultDom) => {
-      const renderMenuDom = () => {
+      // 自定义的 menuItemRender 函数
+      menuItemRender: ({ icon, path, pro_layout_parentKeys }: any, defaultDom: any) => {
+        const renderMenuDom = () => {
+          return (
+            <Space size={4}>
+              {/* 调用 renderMenuIcon 函数渲染图标 */}
+              {icon && pro_layout_parentKeys?.length > 0 && renderMenuItemIcon(icon?.toString())}
+              {defaultDom}  {/* 菜单名称 */}
+            </Space>
+          );
+        };
         return (
-          <Space size={4}>
-            {/* 调用 renderMenuIcon 函数渲染图标 */}
-            {icon && pro_layout_parentKeys?.length > 0 && renderMenuItemIcon(icon?.toString())}
-            {defaultDom}  {/* 菜单名称 */}
-          </Space>
+          <Link to={path!}>
+            {renderMenuDom()}
+          </Link>
         );
-      };
-      return (
-        <Link to={path!}>
-          {renderMenuDom()}
-        </Link>
-      );
-    },
-    // subMenuItemRender: ({ icon, path = '', pro_layout_parentKeys, isUrl }, defaultDom) => {
-    //   return (
-    //     <Space size={4}>
-    //       {icon && renderMenuIcon(icon?.toString())}
-    //       {defaultDom}
-    //     </Space>
-    //   );
-    // },
-  };
+      },
+      // subMenuItemRender: ({ icon, path = '', pro_layout_parentKeys, isUrl }, defaultDom) => {
+      //   return (
+      //     <Space size={4}>
+      //       {icon && renderMenuIcon(icon?.toString())}
+      //       {defaultDom}
+      //     </Space>
+      //   );
+      // },
+    }
+  }
 }

@@ -15,7 +15,7 @@ import {
 } from './server';
 import CustomFooter from '@/components/Footer';
 import { Footer } from 'antd/es/layout/layout';
-import { getUser } from '@/utils/server';
+import { getMenuList, getUser } from '@/utils/server';
 
 import { createGradientClass } from 'mini-ground'
 
@@ -44,18 +44,20 @@ const LoginPage: FC = () => {
         getCaptchaData()
         return 0
       }
-      Login(result).then(({data}: any) => {
+      Login(result).then( ({data}: any) => {
         // console.log(data);
         if (data.code === 200) {
           localStorage.setItem('token', data.data)
-          getUser(result.username).then(res => {
+          getUser(result.username).then(async (res) => {
             localStorage.setItem('user', JSON.stringify(res.data))
-            let name = res.data?.nickName
-            let avatar = res.data?.avatar
+            const {nickName, avatar} = res.data
+            let { data } = await getMenuList(res.data)
             setInitialState({
-              name,
+              user: res.data,
+              name: nickName,
               avatar,
               loading: true,
+              RouteMenu: data
             })
           })
           setTimeout(() => {
