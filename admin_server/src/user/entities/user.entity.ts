@@ -21,6 +21,12 @@ export class User {
   avatar: string
 
   @Column({nullable: true})
+  desc: string
+
+  @Column({nullable: true})
+  hobbyDesc: string
+
+  @Column({nullable: true})
   email: string
 
   @Column({nullable: true})

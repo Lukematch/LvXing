@@ -65,13 +65,16 @@ export class UserService {
         })
         // 存在当前用户 更新用户信息
         if(existUserId){
-          let update = {}
+          let update: any = {}
           // 去空值
           Object.keys(params).map((key)=> {
             let value = params[key];
             if(value !== null && value !== undefined && value !== '') update[key] = value
           })
           // console.log(update);
+          if(update.role && existUserId.role !== update.role && (existUserId?.username === 'lv0001' || existUserId?.username === 'lv0002')) {
+            return {code: 401, success: false, message: '无权限修改该用户角色！'}
+          }
           await this.userRepository.update(id, update)
           return {code: 200, success: true, message: '用户信息更新成功'};
         // 不存在当前用户
