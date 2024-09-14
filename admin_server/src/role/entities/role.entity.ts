@@ -9,6 +9,9 @@ export class Role {
   @Column()
   name: string;
 
+  @Column()
+  code: string;
+
   @CreateDateColumn()
   createTime: Date;
 

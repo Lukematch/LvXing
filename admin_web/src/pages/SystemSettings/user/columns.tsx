@@ -6,6 +6,7 @@ import { randomTagColor } from "@/utils";
 import { ProColumns } from "@ant-design/pro-components";
 import { UserType } from "./index";
 import { format } from "date-fns";
+import { getRoleList } from "./server";
 
 // 元组配置
 export const customColumns: ProColumns<UserType>[] = [
@@ -63,6 +64,7 @@ export const customColumns: ProColumns<UserType>[] = [
     render: (_, record) => (
       <Image
       width={60}
+      height={60}
       src={record?.avatar}
       preview={{
         maskStyle: {
@@ -84,6 +86,13 @@ export const customColumns: ProColumns<UserType>[] = [
     valueType: 'select',
     align: 'center',
     width: 120,
+    request: async () => {
+      const { data } = await getRoleList()
+      return data.map((role: any) => ({
+        label: role?.name,
+        value: role?.code
+      }))
+    },
     render: (text: any) => {
       let role = text.props.record.role
       let color = role === 'root'? '#16c8c8': role === 'user'? 'green' : 'orange'

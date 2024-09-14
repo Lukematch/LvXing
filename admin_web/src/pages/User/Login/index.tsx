@@ -54,7 +54,8 @@ const LoginPage: FC = () => {
             let avatar = res.data?.avatar
             setInitialState({
               name,
-              avatar
+              avatar,
+              loading: true,
             })
           })
           setTimeout(() => {
@@ -66,7 +67,6 @@ const LoginPage: FC = () => {
             localStorage.clear()
             history.push("/user/login");
           }, 1000 * 60 * 60)
-
           history.push("/instructionPanel/workbench");
           message.success(data.message)
         } else if (data.code === 401 || data.code === 404) {

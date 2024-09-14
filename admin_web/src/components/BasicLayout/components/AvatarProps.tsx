@@ -13,7 +13,7 @@ export default function AvatarProps(): HeaderProps['avatarProps'] {
   // 获取全局状态
   const { initialState, setInitialState, refresh } = useModel('@@initialState');
 
-  const logOutClick = () => {
+  const logOutClick = async () => {
     try{
       refresh()
       localStorage.clear()

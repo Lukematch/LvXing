@@ -7,6 +7,11 @@
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
+html, body {
+  overflow-x: auto; /* 确保水平滚动条可用 */
+  overflow-y: auto; /* 保持垂直滚动条的正常行为 */
+}
+
 /* For WebKit browsers (Chrome, Safari, etc.) */
 ::-webkit-scrollbar {
   width: thin; /* 滚动条的宽度 */

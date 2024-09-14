@@ -10,7 +10,7 @@ import { getRoutes } from '@/../config/router/getroutes';
 import { iconMap } from '@/services/icon';
 import Layout from '@/.umi/plugin-layout/Layout';
 import Paragraph from 'antd/es/skeleton/Paragraph';
-import { useIntl } from '@ant-design/pro-components';
+import { PageLoading, useIntl } from '@ant-design/pro-components';
 
 export const BasicLayout: RunTimeLayoutConfig = ({
   initialState,
@@ -42,8 +42,6 @@ export const BasicLayout: RunTimeLayoutConfig = ({
         // console.log(routes);
         // 根据需求处理从后端返回的数据
         const convertRoutes = (route: any) => {
-          // console.log(route);
-          // console.log('Route icon:', route.icon);
           return {
             path: route.path,
             name: route.menuName,
@@ -81,6 +79,5 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     //     </Space>
     //   );
     // },
-
   };
 }

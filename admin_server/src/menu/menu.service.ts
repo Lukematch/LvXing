@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Menu } from './entities/menu.entity';
 import { convertToTree } from 'src/utils/convertToTree';
 import { User } from 'src/user/entities/user.entity';
@@ -32,7 +32,7 @@ export class MenuService {
       case 'user':
         return this.menu.find({
           where: {
-            menuType: 'guest' || 'user',
+            menuType: In(['guest', 'user'])
           }
         });
       case 'guest':
