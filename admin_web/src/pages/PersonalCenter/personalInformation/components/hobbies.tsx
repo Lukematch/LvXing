@@ -3,8 +3,15 @@ import { getHobbyList } from '../server'
 import { useModel } from '@umijs/max';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Avatar, Button, Divider, List, Skeleton, message } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
 
-const Hobbies =() => {
+const Hobbies =(
+  props?: {
+    update: boolean,
+    setOpen: any,
+    form: any
+  }
+  ) => {
   const { initialState, setInitialState, refresh } = useModel('@@initialState');
 
   const [hobbyList, setHobbyList] = useState<any[]>([])
@@ -54,15 +61,40 @@ const Hobbies =() => {
       <List
         dataSource={hobbyList}
         renderItem={(item: any) => (
-          <List.Item key={item?.email}>
-            <List.Item.Meta
-              avatar={item?.hobbyIcon.slice(0, 4) === 'http'? <Avatar src={item?.hobbyIcon}/>:
-              <Avatar>{item?.hobbyIcon}</Avatar>}
-              title={<a href="#">{item?.hobbyName}</a>}
-              description={item?.hobbyDescription}
-            />
-            {/* <div>Content</div> */}
-          </List.Item>
+          props?.update? <List.Item
+            key={item?.email}
+            actions={[
+              <Button key="list-edit"
+              onClick={() => {
+                props?.setOpen(true)
+                if (item?.hobbyIcon?.slice(0, 4) === 'http') {
+                  let file = {
+                    uid: uuidv4(),
+                    name: item?.hobbyIcon?.substring(item?.hobbyIcon?.lastIndexOf('/') + 1),
+                    status: 'done',
+                    url: item?.hobbyIcon
+                  }
+                  item.file = (item?.hobbyIcon === '' || item?.hobbyIcon === null)? [] : [file]
+                }
+                props?.form.setFieldsValue(item)
+              }}>编辑</Button>
+            ]}>
+              <List.Item.Meta
+                avatar={item?.hobbyIcon.slice(0, 4) === 'http'? <Avatar src={item?.hobbyIcon}/>:
+                <Avatar>{item?.hobbyIcon}</Avatar>}
+                title={<a href="#">{item?.hobbyName}</a>}
+                description={item?.hobbyDescription}
+              />
+            </List.Item> :
+            <List.Item
+            key={item?.email}>
+              <List.Item.Meta
+                avatar={item?.hobbyIcon.slice(0, 4) === 'http'? <Avatar src={item?.hobbyIcon}/>:
+                <Avatar>{item?.hobbyIcon}</Avatar>}
+                title={<a href="#">{item?.hobbyName}</a>}
+                description={item?.hobbyDescription}
+              />
+            </List.Item>
         )}
       />
     </InfiniteScroll>

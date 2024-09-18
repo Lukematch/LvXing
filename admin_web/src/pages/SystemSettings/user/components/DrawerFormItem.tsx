@@ -4,8 +4,8 @@ import { getRoleList } from '../server';
 
 const DrawerFormItem = (
   props: {
-    type: 'edit' | 'view' | 'add' | undefined,
-    record: any
+    type?: 'edit' | 'view' | 'add' | undefined,
+    record?: any
   }
   ) => {
   return <>

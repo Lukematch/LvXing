@@ -11,13 +11,13 @@ export class HobbyService {
     @InjectRepository(Hobby)
     private readonly hobbyRepository: Repository<Hobby>,
   ) {}
-  create(createHobbyDto: CreateHobbyDto) {
+  update(createHobbyDto: CreateHobbyDto) {
     return 'This action adds a new hobby';
   }
 
-  findAll() {
-    return `This action returns all hobby`;
-  }
+  // findAll() {
+  //   return `This action returns all hobby`;
+  // }
 
   findByUser(username: string) {
     const existUser = this.hobbyRepository.find({
@@ -31,9 +31,9 @@ export class HobbyService {
     return existUser
   }
 
-  update(id: number, updateHobbyDto: UpdateHobbyDto) {
-    return `This action updates a #${id} hobby`;
-  }
+  // update(id: number, updateHobbyDto: UpdateHobbyDto) {
+  //   return `This action updates a #${id} hobby`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} hobby`;

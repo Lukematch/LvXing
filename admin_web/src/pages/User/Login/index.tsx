@@ -51,13 +51,13 @@ const LoginPage: FC = () => {
           getUser(result.username).then(async (res) => {
             localStorage.setItem('user', JSON.stringify(res.data))
             const {nickName, avatar} = res.data
-            let { data } = await getMenuList(res.data)
+            // let { data } = await getMenuList(res.data)
             setInitialState({
               user: res.data,
               name: nickName,
               avatar,
-              loading: true,
-              RouteMenu: data
+              // loading: true,
+              // RouteMenu: data
             })
           })
           setTimeout(() => {

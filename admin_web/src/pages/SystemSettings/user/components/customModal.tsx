@@ -26,7 +26,7 @@ const CustomModal = (
       status: 'done',
       url: record?.avatar
     }
-    record.file = (record?.logo === '' || record?.logo === null)? [] : [file]
+    record.file = (record?.avatar === '' || record?.avatar === null)? [] : [file]
     form.setFieldsValue({...record, updateTime: dayjs()})
   }
   if(type === 'add') {
