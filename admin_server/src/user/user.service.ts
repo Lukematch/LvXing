@@ -33,6 +33,23 @@ export class UserService {
     return {code: 200, success: true, message: '密码重置成功！'}
   }
 
+  async setPw(body:{pw: {oldPassword: string, newPassword: string}, id: number}) {
+    const { pw, id } = body
+    const { oldPassword, newPassword } = pw
+    const existUser = await this.userRepository.findOne({
+      where: { id }
+    })
+    if(!existUser) {
+      return {code: 401, success: false, message: '不存在该用户！'}
+    }
+    if(existUser.password !== encry(oldPassword, existUser.salt)) {
+      return {code: 401, success: false, message: '旧密码错误！'}
+    }
+    existUser.password = encry(newPassword, existUser.salt)
+    await this.userRepository.save(existUser)
+    return {code: 200, success: true, message: '密码修改成功！'}
+  }
+
   // 更新用户
   async update(body: {params: UpdateUserDto, id?: number}) {
     // console.log(body);

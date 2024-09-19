@@ -5,15 +5,15 @@ export class Hobby {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({nullable: true})
   username: string;
 
-  @Column()
+  @Column({nullable: true})
   hobbyName: string;
 
-  @Column()
+  @Column({nullable: true})
   hobbyDescription: string;
 
-  @Column()
+  @Column({nullable: true})
   hobbyIcon: string;
 }

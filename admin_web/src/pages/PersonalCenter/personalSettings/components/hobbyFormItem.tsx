@@ -1,10 +1,21 @@
 import { ProFormGroup, ProFormRadio, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
-import { Radio } from 'antd'
+import { useModel } from '@umijs/max';
+import { Empty, Radio } from 'antd'
 import React, { useState } from 'react'
 
 const HobbyFormItem = () => {
+  const { initialState, setInitialState } = useModel('@@initialState');
   const [type, setType] = useState<'text' | 'upload'>('text')
   return <>
+    <ProFormText
+    name='username'
+    label='用户名'
+    disabled
+    initialValue={initialState?.user?.username}
+    rules={[
+      { required: true, message: '' }
+    ]}
+    />
     {/* 兴趣爱好名称 */}
     <ProFormText
      name='hobbyName'
@@ -68,37 +79,41 @@ const HobbyFormItem = () => {
         value: type,
         onChange: (e) => setType(e.target.value),
       }}
-      rules={[
-        { required: true, message: '' }
-      ]}
     />
     {type === 'text'? <ProFormText
       name='hobbyIcon'
       extra='*请输入一个emoji表情*'
-      /> : <ProFormUploadButton
-      name="file"
-      colProps={{ span: 24 }}
-      max={1}
-      rules= {[ {required: true, message: '请上传图片！'} ]}
-      fieldProps={{
-        name: 'file',
-        listType: 'picture-card',
-        // 配置图片上传 本地路径
-        action: '/api/upload/image',
-        multiple: false,
-        maxCount: 1,
-        accept: 'picture/*',
-        progress: {
-          strokeColor: {
-            '0%': '#108ee9',
-            '100%': '#87d068',
-          },
-          strokeWidth: 5,
-          format: percent => percent && `${parseFloat(percent.toFixed(2))}%`,
-        },
-      }}
-      extra="*支持单个图片文件上传且大小不超过10M*"
-      />
+      rules={[
+        { required: true, message: '图标不能为空！' }
+      ]}
+      /> : <Empty description='维修中，loading...'/>
+      // <ProFormUploadButton
+      // name="file"
+      // colProps={{ span: 24 }}
+      // max={1}
+      // rules= {[ {required: true, message: '请上传图片！'} ]}
+      // fieldProps={{
+      //   name: 'file',
+      //   listType: 'picture-card',
+      //   // 配置图片上传 本地路径
+      //   action: '/api/upload/image',
+      //   multiple: false,
+      //   maxCount: 1,
+      //   accept: 'picture/*',
+      //   progress: {
+      //     strokeColor: {
+      //       '0%': '#108ee9',
+      //       '100%': '#87d068',
+      //     },
+      //     strokeWidth: 5,
+      //     format: percent => percent && `${parseFloat(percent.toFixed(2))}%`,
+      //   },
+      // }}
+      // extra="*支持单个图片文件上传且大小不超过10M*"
+      // rules={[
+      //   { required: true, message: '' }
+      // ]}
+      // />
     }
   </>
 }

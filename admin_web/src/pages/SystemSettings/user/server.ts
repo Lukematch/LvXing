@@ -50,3 +50,13 @@ export const resetPassword = (pw: string, id: number) => {
     return res
   })
 }
+
+/**
+ * @params 修改用户密码
+ */
+
+export const changePassword = (pw: {oldPassword: string, newPassword: string}, id: number) => {
+  return http.post({url: `/api/user/pw`, data: { pw, id }}).then((res: any) => {
+    return res
+  })
+}

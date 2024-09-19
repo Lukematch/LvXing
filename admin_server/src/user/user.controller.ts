@@ -16,6 +16,11 @@ export class UserController {
     return this.userService.resetPw(body);
   }
 
+  @Post('/pw')
+  setPw(@Body() body: {pw: {oldPassword: string, newPassword: string}, id: number}) {
+    return this.userService.setPw(body);
+  }
+
   @Get()
   findAll(@Query() query: any) {
     return this.userService.findAll(query);

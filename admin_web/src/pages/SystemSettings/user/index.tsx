@@ -109,8 +109,9 @@ export default () => {
     data?.success? api['success']({
       // showProgress: true,
       // pauseOnHover: true,
-      message: '信息修改通知',
+      message: '信息变更',
       description: '密码重置成功！',
+      duration: 5
     }) : message.error(data?.message)
   }
   const handleDelete = async (id: number) => {
