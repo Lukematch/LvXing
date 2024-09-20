@@ -17,6 +17,19 @@ import {
   MenuOutlined,
   ControlOutlined,
   EditOutlined,
+  RetweetOutlined,
+  PlayCircleOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+  PicCenterOutlined,
+  PicLeftOutlined,
+  PicRightOutlined,
+  QuestionCircleOutlined,
+  MinusSquareOutlined,
+  ClockCircleOutlined,
+  StopOutlined,
+  FormOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons';
 
 export const iconMap: { [key: string]: ReactNode }  = {
@@ -37,4 +50,17 @@ export const iconMap: { [key: string]: ReactNode }  = {
   menu: <MenuOutlined />,
   control: <ControlOutlined />,
   edit: <EditOutlined />,
+  retweet: <RetweetOutlined />,
+  playCircle: <PlayCircleOutlined />,
+  loginIn: <LoginOutlined />,
+  loginOut: <LogoutOutlined />,
+  picCenter: <PicCenterOutlined />,
+  picLeft: <PicLeftOutlined />,
+  picRight: <PicRightOutlined />,
+  questionCircle: <QuestionCircleOutlined />,
+  minuSquare: <MinusSquareOutlined />,
+  clockCircle: <ClockCircleOutlined />,
+  stop: <StopOutlined />,
+  form: <FormOutlined />,
+  unorderedList: <UnorderedListOutlined />
 };

@@ -9,24 +9,6 @@ export const getPositionList = async (name?: string, affiliated_org?: string) =>
   const { data } = res;
   const tree: PositionType[] = [];
   const map = new Map<string, PositionType>();
-
-  // 根据 parent_id 从后端获取父节点，并更新 map 和 tree
-  // const fetchParentNode = async (parentId: string) => {
-  //   const parentRes = await http.get({ url: `/api/position/`, params: { id: parentId } });
-  //   const parent = parentRes.data;
-  //   if (parent) {
-  //     parent.children = [];
-  //     map.set(parent.id, parent);
-  //     // 递归构建树
-  //     if (parent.parent_id) {
-  //       // await fetchParentNode(parent.parent_id);
-  //       // parent.children!.push(map.get(parent.id)!);
-  //     } else {
-  //       tree.push(map.get(parent.id)!);
-  //     }
-  //   }
-  // };
-
   // 构建 map
   for (const item of data) {
     item.index = data.indexOf(item) + 1;
@@ -63,7 +45,7 @@ export const getPositionList = async (name?: string, affiliated_org?: string) =>
   };
   removeEmptyChildren(tree);
 
-  console.log('@tree',tree);
+  // console.log('@tree',tree);
 
   return {
     data: tree,

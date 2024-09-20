@@ -1,3 +1,4 @@
+import { iconMap } from '@/services/icon'
 import { sample } from 'lodash'
 
 /**
@@ -16,7 +17,7 @@ export const getCurrentTime = () => {
 
 
 /**
- * @description: Tag 标签随机颜色
+ * @description: Tag 标签  随机颜色
  */
 export const randomTagColor = () => {
   const colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
@@ -25,10 +26,24 @@ export const randomTagColor = () => {
 
 
 
+/**
+ * @description: 等候区异步方法
+ */
 export const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
     }, time);
   });
+};
+
+
+
+/**
+ * @description: 渲染图标
+ */
+export const renderMenuIcon = (icon: string | null | undefined) => {
+  return <>
+    {iconMap[icon!]}
+  </>
 };

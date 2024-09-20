@@ -11,21 +11,9 @@ import { iconMap } from '@/services/icon';
 import Layout from '@/.umi/plugin-layout/Layout';
 import Paragraph from 'antd/es/skeleton/Paragraph';
 import { PageLoading, useIntl } from '@ant-design/pro-components';
+import { renderMenuIcon } from '@/utils';
 
-export const BasicLayout: RunTimeLayoutConfig = ({
-  initialState,
-  setInitialState,
-}: InitDataType) => {
-  const renderMenuIcon = (icon: string | null | undefined) => {
-    return <div style={{color: '#aaa'}}>
-      {iconMap[icon!]}
-    </div>;
-  };
-  const renderMenuItemIcon = (icon: string | null | undefined) => {
-    return <div style={{color: '#aaa', marginRight: '5px'}}>
-      {iconMap[icon!]}
-    </div>;
-  }
+export const BasicLayout: RunTimeLayoutConfig = ({initialState, setInitialState}: InitDataType) => {
   return {
     title: 'LvXing',
     logo: '/favicon.ico',
@@ -39,16 +27,13 @@ export const BasicLayout: RunTimeLayoutConfig = ({
     menu: {
       request: async () => {
         const routes = await getRoutes();
-        // console.log(routes);
         // 根据需求处理从后端返回的数据
         const convertRoutes = (route: any) => {
-          // console.log(route);
-          // console.log('Route icon:', route.icon);
           return {
             path: route.path,
             name: route.menuName,
-            // 确保 icon 传递，若为 null 则设置为 null
-            icon: !route.parentId? renderMenuIcon(route?.icon?.toString()) : route.icon,
+            // 确保 icon 传递 若为父节点则直接渲染 子节点则传字符串在menuItemRender中渲染
+            icon: !route.parentId? <div style={{color: '#aaa'}}>{renderMenuIcon(route?.icon?.toString())}</div> : route.icon,
             // 递归处理子菜单
             routes: route.routes ? route.routes.map(convertRoutes) : [],
           };
@@ -61,9 +46,10 @@ export const BasicLayout: RunTimeLayoutConfig = ({
       const renderMenuDom = () => {
         return (
           <Space size={4}>
-            {/* 调用 renderMenuIcon 函数渲染图标 */}
-            {icon && pro_layout_parentKeys?.length > 0 && renderMenuItemIcon(icon?.toString())}
-            {defaultDom}  {/* 菜单名称 */}
+              {/* 调用 renderMenuIcon 函数渲染图标 */}
+            {icon && pro_layout_parentKeys?.length > 0 && <div style={{color: '#aaa', marginRight: '5px'}}>{renderMenuIcon(icon?.toString())}</div>}
+              {/* 菜单名称 */}
+            {defaultDom}
           </Space>
         );
       };
@@ -73,14 +59,5 @@ export const BasicLayout: RunTimeLayoutConfig = ({
         </Link>
       );
     },
-    // subMenuItemRender: ({ icon, path = '', pro_layout_parentKeys, isUrl }, defaultDom) => {
-    //   return (
-    //     <Space size={4}>
-    //       {icon && renderMenuIcon(icon?.toString())}
-    //       {defaultDom}
-    //     </Space>
-    //   );
-    // },
-
   };
 }

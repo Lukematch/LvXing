@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
@@ -16,7 +15,7 @@ export class MenuService {
     private readonly userRepository: Repository<User>
   ) {}
 
-  create(createMenuDto: CreateMenuDto) {
+  async update(updateMenuDto: UpdateMenuDto) {
     return 'This action adds a new menu';
   }
 
@@ -44,13 +43,13 @@ export class MenuService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menu`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} menu`;
+  // }
 
-  update(id: number, updateMenuDto: UpdateMenuDto) {
-    return `This action updates a #${id} menu`;
-  }
+  // update(id: number, updateMenuDto: UpdateMenuDto) {
+  //   return `This action updates a #${id} menu`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} menu`;
