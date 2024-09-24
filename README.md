@@ -84,6 +84,6 @@ http://localhost:3000
 
 ```
 
-## ⭐ Star History
+<!-- ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/LvXing&type=Timeline)](https://star-history.com/#Lukematch/LvXing&Timeline)
+[![Star History Chart](https://api.star-history.com/svg?repos=Lukematch/LvXing&type=Timeline)](https://star-history.com/#Lukematch/LvXing&Timeline) -->
