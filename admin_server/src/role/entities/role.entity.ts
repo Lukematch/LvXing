@@ -6,16 +6,16 @@ export class Role {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({nullable: true})
   name: string;
 
-  @Column()
+  @Column({nullable: true})
   code: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({nullable: true})
   createTime: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({nullable: true})
   updateTime: Date;
 
   @ManyToMany(() => Permission)
