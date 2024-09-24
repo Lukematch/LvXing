@@ -1,4 +1,4 @@
-import { defineConfig } from "@umijs/max";
+import { defineConfig, history } from "@umijs/max";
 import defaultSettings from './defaultSettings';
 import routes from './routes'
 // import { getRoutes } from "./router/getroutes";
@@ -56,7 +56,6 @@ export default defineConfig({
       }
     },
   },
-
   title: 'LvXing',
   // favicons: ['/favicon.ico']
 })
