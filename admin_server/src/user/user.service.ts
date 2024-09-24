@@ -136,11 +136,11 @@ export class UserService {
       where: { id }
     })
     if (!existUser) {
-      return {code: 401, message: '该用户不存在！'}
+      return {code: 401, success: false, message: '该用户不存在！'}
     } else if (existUser?.username === 'lv0001' || existUser?.username === 'lv0002') {
-      return {code: 301, message: '不可删除该内测用户！'}
+      return {code: 301, success: false, message: '不可删除该内测用户！'}
     }
     await this.userRepository.delete(id)
-    return {code: 200, message: '用户删除成功！'}
+    return {code: 200, success: true, message: '用户删除成功！'}
   }
 }

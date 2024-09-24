@@ -132,6 +132,7 @@ export default () => {
     className={styles.user}
     columns={columns}
     loading={isLoading}
+    search={false}
     scroll={{
       x: 'max-content'
     }}
@@ -148,11 +149,10 @@ export default () => {
     toolBarRender={() => [
       <Button
       key="button"
-      icon={<PlusOutlined />}
+      // icon={<PlusOutlined />}
       onClick={handleEdit.bind(this, null, 'add')}
-      type="primary"
       >
-        新建
+        新增
       </Button>
       ]}
     />

@@ -2,7 +2,7 @@ import BreadCrumb from '@/components/BreadCrumb'
 import styles from './index.module.less'
 import { ActionType, DrawerForm, ProCard, ProFormField, ProTable, ProColumns } from '@ant-design/pro-components';
 import { useEffect, useRef, useState } from 'react';
-import { getMenuList } from './server';
+import { deleteMenu, getMenuList } from './server';
 import { useLocation } from '@umijs/max';
 import { Button, Dropdown, Form, MenuProps, Popconfirm, message } from 'antd';
 import { customColumns } from './cloumns';
@@ -41,7 +41,7 @@ export default () => {
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState<'add' | 'edit' | 'view'>('add');
   const [record, setRecord] = useState<any>()
-
+  const [saveId, setSaveId] = useState<number>()
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   // ProFormField获取数据展示
@@ -107,7 +107,7 @@ export default () => {
         </Button>
       </Dropdown>
       ]
-  }
+    }
   })
 
   const handleView = (record: any) => {
@@ -121,22 +121,22 @@ export default () => {
       setOpen(true);
       setModalType(type);
       setRecord(record)
-      // if (type === 'edit') {
-      //   setSaveId(record?.id)
-      //   form.setFieldsValue(record)
-      // } else {
-      //   form.resetFields();
-      // }
+      if (type === 'edit') {
+        setSaveId(record?.id)
+        form.setFieldsValue(record)
+      } else {
+        form.resetFields();
+      }
     }
 
     // 删除操作
     const handleDelete = async (id: number) => {
-      setIsLoading(true)
       await waitTime(1000);
-      // const { data } = id && await deletePosition(id)
-      // data.code = 200 && message.success('删除成功')
-      // data.code !== 200 && message.error('删除失败')
-      // actionRef.current?.reload()
+      const { data } = await deleteMenu(id)
+      data?.success?
+        message.success(data?.message)
+        : message.error(data?.message)
+      actionRef.current?.reload()
     }
 
   return <>
@@ -148,10 +148,12 @@ export default () => {
       loading={isLoading}
       rowKey='id'
       headerTitle='菜单管理'
+      tooltip='编号 1~17 为默认菜单，不可删除！'
+      search={false}
       actionRef={actionRef}
-      search={{
-        labelWidth: 'auto',
-      }}
+      // search={{
+      //   labelWidth: 'auto',
+      // }}
       scroll={{
         x: 'max-content',
       }}
@@ -180,15 +182,14 @@ export default () => {
       toolBarRender={() => [
         <Button
         key="button"
-        icon={<PlusOutlined />}
+        // icon={<PlusOutlined />}
         onClick={handleEdit.bind(this, null, 'add')}
-        type="primary"
         >
-          新建
+          新增
         </Button>
       ]}
     />
-    <MenuForm open={open} modalType={modalType} setOpen={setOpen} record={record}/>
+    <MenuForm saveId={saveId} form={form} open={open} modalType={modalType} setOpen={setOpen} record={record} />
 
     <ProCard title="表格数据" headerBordered collapsible defaultCollapsed
     style={{marginBottom: 40}}
