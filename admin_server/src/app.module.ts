@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { MenuModule } from './menu/menu.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
@@ -13,6 +12,7 @@ import { OrangizationModule } from './orangization/orangization.module';
 import { FileModule } from './file/file.module';
 import { PositionModule } from './position/position.module';
 import { HobbyModule } from './hobby/hobby.module';
+import { LoggerModule } from './logger/logger.module';
 import * as path from 'path'
 
 // const isProd = process.env.NODE_ENV == 'production'
@@ -44,6 +44,7 @@ import * as path from 'path'
     FileModule,
     PositionModule,
     HobbyModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
