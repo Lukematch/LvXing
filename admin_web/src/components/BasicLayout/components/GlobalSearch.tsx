@@ -8,7 +8,7 @@ const GlobalSearch: FC = () => {
 
   const renderContent = (
     <Card bordered={false} style={{ boxShadow: 'none' }}>
-      <Row>
+      {/* <Row>
         <Input placeholder="输入关键字搜索..."
           // variant="borderless"
           style={{color: '#aaa'}}
@@ -17,7 +17,8 @@ const GlobalSearch: FC = () => {
       </Row>
       <Spin spinning={false}>
       <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      </Spin>
+      </Spin> */}
+      <Empty description='暂未开放' image={Empty.PRESENTED_IMAGE_SIMPLE} />
     </Card>
   );
 
@@ -40,18 +41,19 @@ const GlobalSearch: FC = () => {
           }
         }}
       >
-        <Popover title={
-          <Tooltip title='点击工具栏搜索框即可悬停'>
-            <h4>全局搜索</h4>
-          </Tooltip>
-        }
+        <Popover
+        // title={
+        //   <Tooltip title='点击工具栏搜索框即可悬停'>
+        //     <h4>全局搜索</h4>
+        //   </Tooltip>
+        // }
         content={renderContent}
         trigger="hover"
         open={hovered}
         onOpenChange={handleHoverChange}
         >
           <Popover
-          title='全局搜索'
+          // title='全局搜索'
           content={renderContent}
           trigger="click"
           open={clicked}

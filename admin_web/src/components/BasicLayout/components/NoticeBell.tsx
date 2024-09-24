@@ -1,30 +1,14 @@
 import { useMount, useRequest, useUnmount } from 'ahooks';
-import { Avatar, Badge, Button, Card, ConfigProvider, Dropdown, List, Popover, Spin, Tabs } from 'antd';
+import { Avatar, Badge, Button, Card, ConfigProvider, Dropdown, Empty, List, Popover, Spin, Tabs } from 'antd';
 import { NotificationOutlined } from '@ant-design/icons';
 import { FC, useState } from 'react';
 const NoticeBell: FC = () => {
-  const record = [
-    {
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      title: '你收到了 14 份新周报',
-      name: '林东东',
-    },
-    {
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      title: '你推荐的 曲妮妮 已通过第三轮面试',
-      name: '曲丽丽',
-    },
-    {
-      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-      title: '这种模板可以区分多种通知类型',
-      name: '林东东',
-    },
-  ]
+  const record:any = []
   const renderContent = (
     <Card bordered={false} style={{ boxShadow: 'none' }}
     // styles={{ body: { padding: 0 } }}
     >
-      <List
+      {/* <List
         itemLayout="horizontal"
         // dataSource={get(announcementList, 'list', [])}
         dataSource={record}
@@ -54,7 +38,8 @@ const NoticeBell: FC = () => {
             />
           </List.Item>
         )}
-      />
+      /> */}
+      <Empty description='暂未开放' image={Empty.PRESENTED_IMAGE_SIMPLE} />
     </Card>
   );
 
@@ -68,7 +53,9 @@ const NoticeBell: FC = () => {
           },
         }}
       >
-        <Popover title='公告' content={renderContent}>
+        <Popover
+        // title='公告'
+        content={renderContent}>
           <Badge size="small">
             <Button type="text" style={{color: '#aaa'}} icon={<NotificationOutlined />}/>
           </Badge>

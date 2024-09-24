@@ -1,5 +1,5 @@
 // import { Link, useLocation } from '@umijs/max'
-import { Avatar, Card, Col, Image, Row, Table } from 'antd'
+import { Avatar, Card, Col, Empty, Image, Row, Table } from 'antd'
 import BreadcrumbItem from 'antd/es/breadcrumb/BreadcrumbItem'
 import routes from '../../../../config/routes'
 import React from 'react'
@@ -42,7 +42,8 @@ export default () =>{
             <ClockCard />
           </Col>
           <Col xl={8} lg={24} md={24} xs={24}>
-            今日头条/天气
+            {/* 今日头条/天气 */}
+            <Empty description='暂未开放' image={Empty.PRESENTED_IMAGE_SIMPLE} />;
           </Col>
         </Row>
       </Card>
@@ -69,7 +70,7 @@ export default () =>{
           </Card>
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col lg={8} md={12} xs={24}>
           <Card className={styles.card} title='树图'></Card>
         </Col>
@@ -95,7 +96,8 @@ export default () =>{
         <Col md={8} xs={24}>
           <Card className={styles.card} title='技术栈'></Card>
         </Col>
-      </Row>
+      </Row> */}
+       <Empty description='其余暂未开放' image={Empty.PRESENTED_IMAGE_SIMPLE} />;
     </Content>
   </div>
 }
