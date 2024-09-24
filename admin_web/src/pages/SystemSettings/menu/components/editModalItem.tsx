@@ -1,8 +1,9 @@
-import { ProFormDatePicker, ProFormSelect, ProFormText, ProFormTimePicker, ProFormUploadButton, ProFormDigit } from '@ant-design/pro-components';
+import { ProFormDatePicker, ProFormSelect, ProFormText, ProFormTimePicker, ProFormUploadButton, ProFormDigit, ProFormTreeSelect } from '@ant-design/pro-components';
 import dayjs from 'dayjs';
 import { getRoleList } from '../../user/server';
 import { iconMap } from '@/services/icon';
 import { getMenuList } from '../server';
+import { menuType } from '..';
 
 // 生成 icon options 列表
 const iconOptions = Object.keys(iconMap).map(key => ({
@@ -21,18 +22,24 @@ const EditModalItem = (
     record?: any
   }
   ) => {
+
+  const convertToTreeData = (nodes: menuType[]): any[] =>
+  nodes?.map(node => ({
+    title: node.menuName,
+    value: node.id,
+    key: node.id,
+    children: node.children ? convertToTreeData(node.children) : []
+  }));
+
   return <>
-    {/* 根节点 */}
-    <ProFormSelect
+    {/* 父节点 */}
+    <ProFormTreeSelect
     name='parentId'
     label='父节点'
     tooltip='不选默认为父节点'
     request={async () => {
       const res = await getMenuList(user)
-      return res.data.map(item => ({
-        label: item.menuName,
-        value: item.id,
-      }))
+      return convertToTreeData(res.data);
     }}
     />
     {/* 菜单名称 */}
@@ -59,8 +66,8 @@ const EditModalItem = (
     {/* 菜单路径 */}
     <ProFormText
     name='path'
-    label='菜单路径'
-    placeholder='请输入菜单路径'
+    label='菜单路由'
+    placeholder='请输入菜单路由'
     tooltip='path'
     rules={[
       { required: true, message: '' },
@@ -85,7 +92,7 @@ const EditModalItem = (
       {
         validator: (_, value) => {
           if (!value) {
-            return Promise.reject(new Error('角色不能为空！'))
+            return Promise.reject(new Error('图标不能为空！'))
           }
           return Promise.resolve()
         },
@@ -96,14 +103,15 @@ const EditModalItem = (
     <ProFormText
     name="component"
     label='组件路径'
-    rules= {[ {required: true, message: '组件路径不为空！'} ]}
+    // rules= {[ {required: true, message: '组件路径不为空！'} ]}
     tooltip= '按照src目录下的pages为启始目录'
     />
     {/* 邮箱 */}
     <ProFormSelect
     name='menuType'
-    label='菜单类型'
-    rules= {[ {required: true, message: '菜单类型不为空！'} ]}
+    label='菜单权限'
+    placeholder='请选择菜单权限'
+    rules= {[ {required: true, message: '菜单权限不为空！'} ]}
     request={async () => {
       const { data } = await getRoleList();
       return data.map((item: any) => ({

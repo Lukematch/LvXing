@@ -7,8 +7,8 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @Post()
-  create(@Body() updateMenuDto: UpdateMenuDto) {
-    return this.menuService.update(updateMenuDto);
+  update(@Body() body: {menu: UpdateMenuDto, id?: number}) {
+    return this.menuService.update(body);
   }
 
   // 获取菜单列表
@@ -18,7 +18,7 @@ export class MenuController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.menuService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.menuService.remove(id);
   }
 }

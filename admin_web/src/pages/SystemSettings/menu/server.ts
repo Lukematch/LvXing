@@ -1,6 +1,11 @@
 import http from "@/utils/request/http"
 import { menuType } from "."
 
+/**
+ * @param user 用户信息
+ * @param params 查询参数
+ * @returns 树结构列表
+ */
 export const getMenuList = (user: any, params?: {menuName?: string, menuType?: string, createBy?: string}) => {
   return http.post({
     url: `/api/menu/user`,
@@ -37,11 +42,31 @@ export const getMenuList = (user: any, params?: {menuName?: string, menuType?: s
       });
     };
     removeEmptyChildren(tree);
-    // console.log(tree);
+
+    console.log('@tree',tree);
+
     return {
       data: tree,
       total: data.length,
       success: true
     }
   })
+}
+
+/**
+ * @param menu 携带菜单信息
+ * @param id 菜单id(更新)
+ */
+export const updateMenu = (menu: menuType, id?: number) => {
+  return http.post({
+    url: `/api/menu`,
+    data: { menu, id }
+  })
+}
+
+/**
+ * @param id 菜单id
+ */
+export const deleteMenu = (id: number) => {
+  return http.delete(`/api/menu/${id}`)
 }
